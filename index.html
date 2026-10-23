@@ -4,7 +4,13 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <style>html,body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
-<title>Who's In Tester App</title>
+<title>Who's In</title>
+<meta name="description" content="Find London events and see which friends would go.">
+<meta name="theme-color" content="#FFFFFF">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Who's In">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=DM+Sans:wght@400;500;600;700&display=swap">
@@ -176,6 +182,39 @@ h4.sec{margin:22px 0 10px; font-size:12px; letter-spacing:0.7px; text-transform:
 .tix{display:flex; align-items:center; justify-content:center; text-decoration:none; color:var(--ink); padding:0 18px}
 .hero .navbtn{z-index:2}
 .hero .big{position:relative}
+/* Tester view: the app on its own (add ?test to the link to show the test panel) */
+body.solo .bench{display:none}
+body.solo .stage{justify-content:center}
+body.solo .phone{height:min(812px, calc(100vh - 56px)); min-height:600px}
+@media (max-width:820px){
+  body.solo{padding:0}
+  body.solo .stage{display:block; max-width:none}
+  body.solo .phone{width:100%; max-width:none; height:100vh; height:100dvh; min-height:0; border:0; border-radius:0; box-shadow:none}
+  body.solo .screen{top:env(safe-area-inset-top, 0px); bottom:calc(76px + env(safe-area-inset-bottom, 0px))}
+  body.solo .screen.full{top:0; bottom:calc(92px + env(safe-area-inset-bottom, 0px))}
+  body.solo .screen.chatmode{top:0; bottom:calc(82px + env(safe-area-inset-bottom, 0px))}
+  body.solo .tabs{height:calc(76px + env(safe-area-inset-bottom, 0px)); padding-bottom:env(safe-area-inset-bottom, 0px)}
+  body.solo .bar{padding-bottom:calc(22px + env(safe-area-inset-bottom, 0px))}
+  body.solo .composer{padding-bottom:calc(20px + env(safe-area-inset-bottom, 0px))}
+  body.solo .hero .navbtn{top:calc(18px + env(safe-area-inset-top, 0px))}
+  body.solo .chathead{padding-top:calc(16px + env(safe-area-inset-top, 0px))}
+  body.solo .toast{top:calc(12px + env(safe-area-inset-top, 0px))}
+  body.solo .sheet{max-height:calc(100% - env(safe-area-inset-top, 0px) - 12px)}
+  body.solo .sheet-foot{padding-bottom:calc(18px + env(safe-area-inset-bottom, 0px))}
+}
+.tilehead{display:flex; justify-content:space-between; align-items:center}
+.tiles{display:grid; grid-auto-flow:column; grid-template-rows:repeat(2, 104px); grid-auto-columns:132px; gap:10px; overflow-x:auto; margin-right:-18px; padding:2px 18px 6px 2px; scroll-snap-type:x proximity; scrollbar-width:none}
+.tiles::-webkit-scrollbar{display:none}
+.tile{position:relative; scroll-snap-align:start; display:flex; flex-direction:column; justify-content:flex-end; align-items:flex-start; gap:2px; padding:12px; border-radius:18px; border:2px solid transparent; background:var(--tile); color:var(--ink); text-align:left; transition:transform .12s ease, border-color .12s ease}
+.tile:active{transform:scale(.97)}
+.tile .ticon{position:absolute; top:12px; left:12px}
+.tile .tname{font-family:var(--display); font-weight:800; font-size:19px; letter-spacing:-0.3px; line-height:1.1}
+.tile .tcount{font-size:12px; font-weight:600; color:var(--muted)}
+.tile .tcheck{position:absolute; top:10px; right:10px; width:24px; height:24px; border-radius:12px; background:var(--ink); color:var(--surface); display:none; align-items:center; justify-content:center}
+.tile.empty{opacity:.55}
+.tile[aria-pressed="true"]{border-color:var(--ink)}
+.tile[aria-pressed="true"] .tcheck{display:flex}
+@media (prefers-reduced-motion: reduce){ .tile{transition:none} .tile:active{transform:none} }
 .sr{position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap}
 </style>
 </head>
@@ -371,7 +410,7 @@ const I = {
 
 const $screen = document.getElementById('screen'), $bottom = document.getElementById('bottom'), $sheet = document.getElementById('sheet'), $toast = document.getElementById('toast');
 let toastTimer;
-function toast(msg){ $toast.textContent = msg; $toast.hidden = false; clearTimeout(toastTimer); toastTimer = setTimeout(() => { $toast.hidden = true; }, 3200); }
+function toast(msg, ms){ $toast.textContent = msg; $toast.hidden = false; clearTimeout(toastTimer); toastTimer = setTimeout(() => { $toast.hidden = true; }, ms || 3200); }
 
 const TABS = [['explore','Explore',I.search],['plans','Plans',I.heart],['calendar','Calendar',I.cal],['chats','Chats',I.chat],['profile','Profile',I.user]];
 function go(name, id, push = true){
@@ -470,7 +509,8 @@ function vExplore(){
     <select id="sortSel" class="sortsel">${SORTS.map(s => `<option value="${s[0]}" ${S.sort === s[0] ? 'selected' : ''}>Sort: ${s[1]}</option>`).join('')}</select>
   </div>
   <div class="chips" role="group" aria-label="Dates">${WHENS.map(w => `<button class="chip" data-act="fwhen" data-id="${w[0]}" aria-pressed="${S.f.when === w[0]}">${w[1]}</button>`).join('')}</div>
-  <div class="chips" role="group" aria-label="Categories" style="padding-top:8px">${CATS.map(c => `<button class="chip catc" style="${S.f.cats.includes(c[0]) ? '' : `background:var(--c-${c[0]})`}" data-act="fcat" data-id="${c[0]}" aria-pressed="${S.f.cats.includes(c[0])}">${c[1]}</button>`).join('')}</div>
+  <div class="tilehead"><h4 class="sec" style="margin:18px 0 8px"><span>Browse by type</span></h4>${S.f.cats.length ? `<button class="linkbtn" data-act="clearCats">Show all types</button>` : ''}</div>
+  <div class="tiles" role="group" aria-label="Types of event">${catTiles()}</div>
   ${chips.length ? `<div class="active" aria-label="Active filters">${chips.map(c => `<button class="achip" data-act="rm" data-id="${esc(c[0])}" aria-label="Remove filter: ${esc(c[1])}">${esc(c[1])}<span aria-hidden="true">×</span></button>`).join('')}<button class="linkbtn" data-act="clearF">Clear all</button></div>` : ''}
   ${friendsPicks.length && !q && !chips.length ? `<h4 class="sec"><span>Your friends would go</span></h4>
   <div class="hrow">${friendsPicks.map(e => `<button class="hcard" data-act="event" data-id="${e.id}">${art(e, `<span style="position:absolute;top:10px;left:10px">${badge(e.id)}</span>`)}<span class="ttl">${esc(e.title)}</span><span class="sub">${fmt(e.date)} · ${e.time} · ${e.area}</span></button>`).join('')}</div>` : ''}
@@ -479,6 +519,28 @@ function vExplore(){
   ${list.length ? body + (shown.length < list.length ? `<button class="btn ghost more" data-act="more">Show ${Math.min(30, list.length - shown.length)} more</button>` : '') : `<div class="empty">No events match these filters.<br><button class="linkbtn" data-act="clearF">Clear all filters</button></div>`}`;
 }
 
+const CAT_ICONS = {
+  gigs:'<path d="M9 18V6l10-2v12"/><circle cx="6.5" cy="18" r="2.5"/><circle cx="16.5" cy="16" r="2.5"/>',
+  comedy:'<rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21M8.5 21h7"/>',
+  sport:'<circle cx="12" cy="12" r="8.5"/><path d="M12 7.5l4 2.9-1.5 4.7h-5l-1.5-4.7z"/><path d="M12 3.5v4M20 10.4l-4 0M17 19l-2.5-3.9M7 19l2.5-3.9M4 10.4l4 0"/>',
+  theatre:'<path d="M3 4h18v3c-2 0-3 1.5-3 3.5V20H6v-9.5C6 8.5 5 7 3 7z"/><path d="M10 12h.01M14 12h.01M10 15.5c1.2 1 2.8 1 4 0"/>',
+  clubs:'<circle cx="12" cy="12" r="7.5"/><path d="M4.5 12h15M12 4.5c2.5 2.3 2.5 12.7 0 15M12 4.5c-2.5 2.3-2.5 12.7 0 15M6.5 7.5h11M6.5 16.5h11"/>',
+  food:'<path d="M7 3v8M5 3v5a2 2 0 0 0 4 0V3M7 11v10M16 21V3c-2.2 0-3.5 2.5-3.5 6s1.3 4 3.5 4"/>',
+  markets:'<path d="M4 9l1.5-5h13L20 9M4 9h16M4 9c0 1.7 1.3 3 3 3s3-1.3 3-3c0 1.7 1.3 3 2 3s2-1.3 2-3c0 1.7 1.3 3 3 3s3-1.3 3-3M5.5 12v8h13v-8M10 20v-5h4v5"/>',
+  free:'<path d="M3.5 12.5V4h8.5l8.5 8.5-8 8z"/><circle cx="8" cy="8.5" r="1.5"/>'
+};
+function catTiles(){
+  const q = S.q.trim().toLowerCase(), f = {...S.f, cats:[]}, counts = {};
+  EVENTS.forEach(e => { if(matches(e, f, q)) counts[e.cat] = (counts[e.cat] || 0) + 1; });
+  return CATS.map(c => {
+    const on = S.f.cats.includes(c[0]), n = counts[c[0]] || 0;
+    return `<button class="tile${n || on ? '' : ' empty'}" style="--tile:var(--c-${c[0]})" data-act="fcat" data-id="${c[0]}" aria-pressed="${on}" aria-label="${c[1]}, ${n} event${n === 1 ? '' : 's'}${on ? ', selected' : ''}">
+      <svg class="ticon" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${CAT_ICONS[c[0]]}</svg>
+      <span class="tname">${c[1]}</span><span class="tcount">${n} event${n === 1 ? '' : 's'}</span>
+      <span class="tcheck" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>
+    </button>`;
+  }).join('');
+}
 function vSheet(){
   const f = S.f, n = results().length;
   const chip = (act, id, label, on, sub) => `<button class="chip small" data-act="${act}" data-id="${esc(id)}" aria-pressed="${on}">${esc(label)}${sub ? `<span class="s">${esc(sub)}</span>` : ''}</button>`;
@@ -631,7 +693,9 @@ function render(){
     bottom = `<nav class="tabs" aria-label="App">${TABS.map(t => `<button data-act="tab" data-id="${t[0]}" ${t[0] === active ? 'aria-current="page"' : ''}>${t[2]}${t[1]}${t[0] === 'plans' && pendingAsks() ? `<span class="dot">${pendingAsks()}</span>` : ''}</button>`).join('')}</nav>`;
   }
   const oldBody = document.getElementById('sheetBody'), sheetTop = oldBody ? oldBody.scrollTop : 0, screenTop = $screen.scrollTop;
+  const oldTiles = $screen.querySelector('.tiles'), tilesLeft = oldTiles ? oldTiles.scrollLeft : 0;
   $screen.className = cls; $screen.innerHTML = html; $bottom.innerHTML = bottom; $screen.scrollTop = screenTop;
+  const newTiles = $screen.querySelector('.tiles'); if(newTiles) newTiles.scrollLeft = tilesLeft;
   $sheet.innerHTML = (v.name === 'explore' && S.sheet) ? vSheet() : '';
   const nb = document.getElementById('sheetBody'); if(nb) nb.scrollTop = sheetTop;
   if(v.name === 'chat'){ $screen.scrollTop = $screen.scrollHeight; }
@@ -704,6 +768,7 @@ document.getElementById('phone').addEventListener('click', ev => {
   else if(a === 'openSheet'){ S.sheet = true; render(); }
   else if(a === 'closeSheet'){ S.sheet = false; render(); }
   else if(a === 'fwhen'){ S.f.when = id; if(id === 'dates' && !S.sheet) S.sheet = true; S.limit = 30; render(); }
+  else if(a === 'clearCats'){ S.f.cats = []; S.limit = 30; render(); }
   else if(a === 'fcat'){ S.f.cats = toggle(S.f.cats, id); S.limit = 30; render(); }
   else if(a === 'ftime'){ S.f.times = toggle(S.f.times, id); S.limit = 30; render(); }
   else if(a === 'fregion'){ S.f.regions = toggle(S.f.regions, id); if(!S.f.regions.includes(id)) S.f.areas = S.f.areas.filter(x => REGION[x] !== id); S.limit = 30; render(); }
@@ -795,7 +860,14 @@ async function boot(){
     : `A working prototype for testing every page. Showing ${EVENTS.length} real London events, updated ${updatedText()}. Friends, plans and chats are simulated and saved only in your browser.`;
   render();
 }
-boot();
+const BENCH = /[?&]test\b/.test(location.search);
+if(!BENCH) document.body.classList.add('solo');
+boot().then(() => {
+  if(BENCH) return;
+  let seen = false;
+  try { seen = !!localStorage.getItem('whosin-welcome'); localStorage.setItem('whosin-welcome', '1'); } catch(e){}
+  if(!seen) toast("Welcome to the Who's In test. Events are real; Sam, Amira, Theo and Priya are pretend friends so you can try plans and chats.", 9000);
+});
 })();
 </script>
 
