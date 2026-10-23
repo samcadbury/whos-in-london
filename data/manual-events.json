@@ -1,0 +1,27 @@
+{
+  "about": "Your own picks for Who's In. Add markets, free events and anything Ticketmaster misses. Use \"days\" for weekly events or \"date\" (YYYY-MM-DD) for one-offs. cat must be one of: gigs, comedy, sport, theatre, clubs, food, markets, free. region must be one of: Central, East, North, South, West. These starter entries are examples: check the details before relying on them.",
+  "events": [
+    {
+      "title": "Columbia Road Flower Market",
+      "cat": "markets",
+      "days": ["sun"],
+      "time": "8am",
+      "venue": "Columbia Road",
+      "area": "Bethnal Green",
+      "region": "East",
+      "price": "Free",
+      "desc": "Weekly Sunday flower market. Starter example: check opening times before going."
+    },
+    {
+      "title": "Broadway Market",
+      "cat": "markets",
+      "days": ["sat"],
+      "time": "9am",
+      "venue": "Broadway Market",
+      "area": "Hackney",
+      "region": "East",
+      "price": "Free",
+      "desc": "Saturday food and makers market. Starter example: check opening times before going."
+    }
+  ]
+}
