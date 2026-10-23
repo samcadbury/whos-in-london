@@ -215,6 +215,47 @@ body.solo .phone{height:min(812px, calc(100vh - 56px)); min-height:600px}
 .tile[aria-pressed="true"]{border-color:var(--ink)}
 .tile[aria-pressed="true"] .tcheck{display:flex}
 @media (prefers-reduced-motion: reduce){ .tile{transition:none} .tile:active{transform:none} }
+
+/* Discover layout */
+.xhead{margin:-20px -18px 0; padding:20px 18px 0; border-bottom:1px solid var(--line)}
+.toptabs{display:flex; gap:20px; overflow-x:auto; scrollbar-width:none; margin-top:10px}
+.toptabs::-webkit-scrollbar,.rrow::-webkit-scrollbar,.feat::-webkit-scrollbar,.chips::-webkit-scrollbar{display:none}
+.toptabs button{flex:none; border:0; background:none; padding:10px 0 11px; font-size:15px; font-weight:600; color:var(--muted); border-bottom:3px solid transparent}
+.toptabs button[aria-current="true"]{color:var(--ink); font-weight:700; border-bottom-color:var(--accent)}
+.pickers{display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:8px; margin:14px 0 4px}
+.picker{display:flex; align-items:center; gap:8px; height:52px; padding:0 10px; border:1px solid var(--line); border-radius:14px; min-width:0}
+.picker svg{flex:none; color:var(--muted)}
+.picker > span{display:flex; flex-direction:column; min-width:0; flex:1}
+.picker small{font-size:11px; font-weight:600; color:var(--muted)}
+.picker select{border:0; background:transparent; padding:0; font-weight:700; font-size:14px; min-width:0; width:100%; outline:none; -webkit-appearance:none; appearance:none}
+.feat{display:flex; gap:10px; overflow-x:auto; scroll-snap-type:x mandatory; margin:12px -18px 0; padding:0 18px; scroll-padding:0 18px; scrollbar-width:none}
+.fcard{flex:none; width:86%; height:190px; scroll-snap-align:start; border:0; border-radius:18px; position:relative; overflow:hidden; padding:0; text-align:left; display:flex; align-items:flex-end; color:var(--ink)}
+.fcard .shade{position:absolute; inset:0; background:linear-gradient(to top, rgba(0,0,0,.72), rgba(0,0,0,0) 65%)}
+.ftxt{position:relative; display:flex; flex-direction:column; gap:3px; padding:16px; font-size:13px; font-weight:600}
+.ftxt.onimg{color:#fff}
+.ftag{align-self:flex-start; font-size:11px; font-weight:700; padding:3px 8px; border-radius:10px; background:var(--surface); color:var(--ink)}
+.fttl{font-family:var(--display); font-weight:800; font-size:22px; line-height:1.1; letter-spacing:-0.3px; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden}
+.rhead{display:flex; justify-content:space-between; align-items:baseline; margin:24px 0 10px}
+.rhead h4{margin:0; font-family:var(--display); font-weight:800; font-size:20px; letter-spacing:-0.3px}
+.seeall{border:0; background:none; padding:4px 0; font-weight:700; font-size:14px; color:var(--accent)}
+.rrow{display:flex; gap:12px; overflow-x:auto; margin-right:-18px; padding-right:18px; scrollbar-width:none}
+.tcard{flex:none; width:156px; border:0; background:none; padding:0; text-align:left; display:flex; flex-direction:column; gap:4px; color:var(--ink); text-decoration:none}
+.tart{position:relative; height:104px; border-radius:14px; overflow:hidden; display:flex; align-items:flex-end; padding:10px; margin-bottom:4px}
+.tart .big{font-family:var(--display); font-weight:800; font-size:17px; line-height:1; opacity:.6}
+.dbadge{position:absolute; top:8px; left:8px; min-width:38px; padding:4px 6px; border-radius:10px; background:var(--surface); color:var(--ink); font-weight:800; font-size:16px; line-height:1; text-align:center; display:flex; flex-direction:column; gap:2px}
+.dbadge small{font-size:10px; font-weight:700; text-transform:uppercase; color:var(--muted)}
+.tt{font-size:14px; font-weight:700; line-height:1.25; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden}
+.tcard .sub{font-size:12px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+.fline{font-size:12px; font-weight:700; color:var(--accent)}
+.llist{display:flex; flex-direction:column; margin-top:6px}
+.lrow{display:flex; align-items:center; gap:10px; padding:12px 0; border-top:1px solid var(--line)}
+.lrow .open{flex:1; display:flex; gap:12px; align-items:center; border:0; background:none; padding:0; text-align:left; min-width:0; color:var(--ink); text-decoration:none}
+.lmain{display:flex; flex-direction:column; gap:2px; min-width:0}
+.lmain .ttl{font-size:15px}
+.lmain .sub{font-size:12px}
+.dblock{flex:none; width:52px; display:flex; flex-direction:column; align-items:center; line-height:1.1; font-size:11px; font-weight:700; color:var(--muted)}
+.dblock b{font-size:22px; color:var(--ink); font-weight:800}
+.maplink{flex:none; width:40px; display:flex; justify-content:center; color:var(--muted)}
 .sr{position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap}
 </style>
 </head>
@@ -252,7 +293,7 @@ body.solo .phone{height:min(812px, calc(100vh - 56px)); min-height:600px}
         <li>Heart an event nobody has picked, then make a friend tap I'd go on it here.</li>
         <li>Send a message in a plan chat and wait for a reply.</li>
         <li>Check the calendar to see plans, waiting events and friends' plans.</li>
-        <li>On Explore, open Filters and narrow the events by date, time of day, area, price, type and friends.</li>
+        <li>On Discover, switch between All, Music, Sport, Arts, More and Places, then tap See all on a row.</li>
       </ol>
     </div>
   </section>
@@ -326,12 +367,13 @@ function setEvents(list, meta){
   META = meta || {};
 }
 
-const DEFAULT_F = () => ({when:'all', from:'', to:'', times:[], regions:[], areas:[], price:'any', friendsOnly:false, hideMine:false, cats:[]});
+const DEFAULT_F = () => ({when:'all', from:'', to:'', times:[], regions:[], areas:[], price:'any', friendsOnly:false, hideMine:false, cats:[], big:false});
 const REPLIES = ['Sounds good to me','Shall we meet at the station 15 mins before?','I can book for all of us','Yes! Cannot wait','Anyone want food first?','I\'m in, see you there'];
 
 // Demo friends' picks are placed on real upcoming events so the friend features can be tested.
 function fresh(){
-  const pool = EVENTS.filter(e => e.date >= TODAY && e.date <= addDays(TODAY, 21));
+  const small = EVENTS.filter(e => !e.big && e.date >= TODAY && e.date <= addDays(TODAY, 21));
+  const pool = small.length >= 10 ? small : EVENTS.filter(e => e.date >= TODAY && e.date <= addDays(TODAY, 21));
   const p = i => (pool[Math.min(i, pool.length - 1)] || {}).id;
   const used = new Set(); const take = i => { let k = i; while(pool[k] && used.has(pool[k].id)) k++; const id = (pool[k] || {}).id; if(id) used.add(id); return id; };
   const A = take(2), B = take(6), C = take(12), D = take(18), E = take(24), F = take(9), G = take(30);
@@ -350,7 +392,7 @@ function fresh(){
     ].filter(Boolean),
     username:'jay', phone:'07700 900123',
     prefs:{interest:true, joins:true, merge:true, digest:true},
-    view:{name:'explore'}, stack:[], q:'', f:DEFAULT_F(), sort:'soonest', limit:30, sheet:false, cal:TODAY.slice(0,7), sel:TODAY
+    view:{name:'explore'}, stack:[], top:'all', genre:'', pgroup:'', pcat:'', pcoll:'', psub:'', pbud:'', q:'', f:DEFAULT_F(), sort:'soonest', limit:30, sheet:false, cal:TODAY.slice(0,7), sel:TODAY
   };
 }
 // Removes saved picks for events that have finished or dropped out of the listings.
@@ -363,10 +405,13 @@ function prune(st){
   if(!st.cal || st.cal < TODAY.slice(0,7)) st.cal = TODAY.slice(0,7);
   if(!st.sel || st.sel < TODAY) st.sel = TODAY;
   st.view = {name:'explore'}; st.stack = []; st.sheet = false; st.limit = 30;
+  if(!TOPS.some(t => t[0] === st.top)) st.top = 'all';
+  ['genre','pgroup','pcat','pcoll','psub','pbud'].forEach(k => { if(typeof st[k] !== 'string') st[k] = ''; });
+  if(st.f) st.f.cats = [];
   return st;
 }
 const STORE = 'whosin-live-v1';
-let S = {view:{name:'loading'}, stack:[], notifs:[], interest:{}, mine:[], saved:[], chats:{}, q:'', f:DEFAULT_F(), sort:'soonest', limit:30, username:'jay', phone:'', prefs:{}, cal:TODAY.slice(0,7), sel:TODAY};
+let S = {view:{name:'loading'}, stack:[], top:'all', genre:'', pgroup:'', pcat:'', pcoll:'', psub:'', pbud:'', notifs:[], interest:{}, mine:[], saved:[], chats:{}, q:'', f:DEFAULT_F(), sort:'soonest', limit:30, username:'jay', phone:'', prefs:{}, cal:TODAY.slice(0,7), sel:TODAY};
 function loadState(){
   let st = null;
   try { st = JSON.parse(localStorage.getItem(STORE)); } catch(e){}
@@ -412,7 +457,7 @@ const $screen = document.getElementById('screen'), $bottom = document.getElement
 let toastTimer;
 function toast(msg, ms){ $toast.textContent = msg; $toast.hidden = false; clearTimeout(toastTimer); toastTimer = setTimeout(() => { $toast.hidden = true; }, ms || 3200); }
 
-const TABS = [['explore','Explore',I.search],['plans','Plans',I.heart],['calendar','Calendar',I.cal],['chats','Chats',I.chat],['profile','Profile',I.user]];
+const TABS = [['explore','Discover',I.search],['plans','Plans',I.heart],['calendar','Calendar',I.cal],['chats','Chats',I.chat],['profile','Profile',I.user]];
 function go(name, id, push = true){
   S.sheet = false;
   if(push) S.stack.push(S.view);
@@ -443,6 +488,7 @@ function matches(e, f, q){
   if(f.price === 'free' && e.pmin !== 0) return false;
   if(['10','20','40'].includes(f.price) && (e.pmin === null || e.pmin === undefined || e.pmin > Number(f.price))) return false;
   if(f.cats.length && !f.cats.includes(e.cat)) return false;
+  if(!f.big && e.big) return false;
   if(f.friendsOnly && !friendsOf(e.id).length) return false;
   if(f.hideMine && isMine(e.id)) return false;
   if(q && !(e.title + ' ' + (e.venue || '') + ' ' + e.area + ' ' + e.region + ' ' + catName(e.cat)).toLowerCase().includes(q)) return false;
@@ -465,6 +511,7 @@ function activeChips(){
   if(f.price !== 'any') out.push(['price', PRICES.find(p => p[0] === f.price)[1]]);
   if(f.friendsOnly) out.push(['friends', 'Friends would go']);
   if(f.hideMine) out.push(['hide', "Hiding ones I've picked"]);
+  if(f.big) out.push(['big', 'Including big venues']);
   return out;
 }
 function dayLabel(d){ return d === TODAY ? 'Tonight · ' + fmt(d) : d === TOMORROW ? 'Tomorrow · ' + fmt(d) : fmt(d); }
@@ -484,39 +531,216 @@ function row(e, sub){
   return `<div class="item"><button class="open" data-act="event" data-id="${e.id}">${thumb(e)}<span style="display:flex;flex-direction:column;gap:3px;min-width:0"><span class="ttl">${esc(e.title)}</span><span class="sub">${esc(sub || `${fmt(e.date)} · ${e.area} · ${e.price}`)}</span></span></button>${heartBtn(e.id)}</div>`;
 }
 
-function vExplore(){
+const PLACES_RAW = [["The Devonshire","Pubs","Soho","Central","","roof terrace, Guinness, gastropub food, Sunday roast","Sunday roasts","Soho gastropub known for its Guinness and roof terrace.","W1D 7HW"],["The Owl and Pussycat","Pubs","Shoreditch","East","","beer garden, Sunday roast, live sport, dog-friendly","Pubs with gardens, Sunday roasts","Shoreditch local with a beer garden and Sunday roasts.","E2 7DP"],["Pub On The Park","Pubs","Hackney","East","","heated terrace, London Fields views, BBQ, Sunday roast, live sport, dog-friendly","Pubs with gardens","Terrace looking over London Fields, good for sunny days.","E8 3PE"],["The Parakeet","Pubs","Kentish Town","North","","Sunday roast, cask ales, seafood","Sunday roasts","Food-led Kentish Town pub with a strong Sunday roast.","NW5 2AA"],["Marksman","Pubs","Bethnal Green","East","","local beers, pool table, seasonal British food, Sunday roast, Bib Gourmand","Sunday roasts","Hackney Road pub with award-recognised British cooking.","E2 7SB"],["Royal Oak","Pubs","Bethnal Green","East","","Grade II-listed, beer garden, Sunday roast, live sport","Pubs with gardens, Sunday roasts","Listed pub on Columbia Road, ideal after the flower market.","E2 7RG"],["The Black Eel","Pubs","Dalston","East","","outdoor space, games room, karaoke, Mediterranean food, dog-friendly","Group nights out","Dalston pub with a games room and karaoke.","E8 2JP"],["Lamb Tavern","Pubs","City of London","Central","","historic, inside Leadenhall Market, real ale, basement bar","Historic pubs","Pub inside the Victorian Leadenhall Market.","EC3V 1LR"],["The Pelican","Pubs","Notting Hill","West","","Bib Gourmand, fireplaces, dog-friendly","Cosy pubs","Notting Hill pub with fireplaces and well-regarded food.","W11 1HE"],["The Elgin","Pubs","Maida Vale","West","","40+ beers, log fire, Sunday roast, quiz, live music, comedy, live sport","Sunday roasts, Pub quizzes","Big beer choice plus quizzes, music and comedy nights.","W9 1NJ"],["The Old Nun's Head","Pubs","Nunhead","South","","outdoor seating, pizza, Sunday roast, live music, quiz, queer events","Pub quizzes","Nunhead Green local with pizza, quizzes and drag nights.","SE15 3QQ"],["The Thieves","Pubs","Battersea","South","","retro arcade, live music, cabaret, darts, pool","Group nights out","Pub with an upstairs arcade and gaming room.","SW11 1DJ"],["The Selkirk","Pubs","Tooting","South","","Victorian building, beer garden with pergola, seasonal British food","Pubs with gardens","Tooting pub with a covered beer garden.","SW17 0ES"],["Skehans","Pubs","New Cross","South","","Irish music most nights, beer garden, Thai food, Guinness, Sunday roast","Pubs with live music","Irish music most nights and Thai food in a beer garden pub.","SE14 5TW"],["The Jugged Hare","Pubs","City of London","Central","","Grade II-listed former brewery, game menu","Historic pubs","Former brewery building with a game-focused menu.","EC1Y 4SA"],["The Plimsoll","Pubs","Finsbury Park","North","","wood-fired cooking, burgers, seafood","","Finsbury Park pub known for its food.","N4 2QQ"],["The Audley Public House","Pubs","Mayfair","Central","","Victorian building, painted ceiling, Guinness, upstairs restaurant, Sunday roast","Historic pubs, Sunday roasts","Grand Victorian Mayfair pub with an upstairs dining room.","W1K 2RX"],["People's Park Tavern","Pubs","Hackney Wick","East","","large beer garden, BBQ, live music, quiz, live sport","Pubs with gardens","Huge beer garden on the edge of Victoria Park.","E9 7BT"],["The Harwood Arms","Pubs","Fulham","South","£££","Michelin-starred, game, dog-friendly","Special occasions","Michelin-starred pub cooking, best booked ahead.","SW6 1QP"],["Sun & 13 Cantons","Pubs","Soho","Central","","Cambodian food, basement DJs, live music, live sport","","Soho pub serving Cambodian food with a DJ basement.","W1F 9NG"],["The Hollywood Arms","Pubs","Chelsea","South","","Sunday roast, bloody marys, live sport, private room","Sunday roasts","Chelsea pub with roasts and a private hire room.","SW10"],["The Churchill Arms","Pubs","Kensington","West","","famous flower-covered front, conservatory, Thai food","Hidden gems and quirky spots","Famous flower-covered pub that also serves Thai food.","W8 7LN"],["Hand Of Glory","Pubs","Hackney","East","","DJ nights, events, beer garden, burgers, ciders","Pubs with gardens","Hackney pub with DJs, events and a beer garden.","E8 2BS"],["Owl and Hitchhiker","Pubs","Holloway","North","","pool, live sport, DJ nights, pizza","Group nights out","Book-themed pub with pool and pizza.","N7 6LE"],["The Montpelier","Pubs","Peckham","South","","jazz Sundays, DJ nights, quiz, live sport, Sunday roast, dog-friendly","Pubs with live music, Sunday roasts","Peckham local with Sunday jazz and quiz nights.","SE15 4AR"],["The Kenton","Pubs","Hackney Wick","East","","own pilsner, 17 draught beers, karaoke room, beer garden, Sunday roast, pizza","Pubs with gardens, Group nights out","Brews its own pilsner and has a karaoke room.","E9 5ER"],["Holly Bush","Pubs","Hampstead","North","","Grade II-listed, open fires, cask ales, dog-friendly","Cosy pubs, Historic pubs","Tucked-away Hampstead pub with open fires.","NW3 6SG"],["The Cow","Pubs","Westbourne Park","West","","Irish tavern, Guinness, oysters, seafood","","Irish-style pub for Guinness and oysters.","W2 5QH"],["The Culpeper","Pubs","Shoreditch","East","","rooftop garden with views, French bistro food","Rooftop bars","Pub with a rooftop garden growing its own produce.","E1 6LP"],["The Cadogan Arms","Pubs","Chelsea","South","","stately interiors, Guinness, Sunday roast","Sunday roasts","Smart King's Road pub with a roast menu.","SW3 5UG"],["The Crooked Billet E5","Pubs","Clapton","East","","large beer garden, fairy lights, table tennis, live sport, Sunday roast","Pubs with gardens","Big fairy-lit beer garden with table tennis.","E5 9JP"],["The Colonel Fawcett","Pubs","Camden","North","","19 beers, 100+ gins, pool, darts, Friday quiz","Pub quizzes","Camden pub with a huge gin list and Friday quiz.","NW1 0SS"],["Black Horse","Pubs","Fitzrovia","Central","","upstairs speakeasy, local beers, cocktails, dates to 1809","Historic pubs","Old Fitzrovia pub with a speakeasy upstairs.","W1T 1HL"],["The French House","Pubs","Soho","Central","","half pints only, literary history, no screens","Historic pubs","Classic Soho pub that only serves half pints.","W1D 5BG"],["Grand Junction Arms","Pubs","Park Royal","North","","canal views, large beer garden, burger shack, live sport","Pubs with gardens","Canalside pub with a big garden and burger shack.","NW10 7AD"],["The George","Pubs","Fitzrovia","Central","","Grade II-listed, Guinness, Irish coffee, live sport","Historic pubs","Listed Fitzrovia pub known for its Guinness.","W1W 7LQ"],["The Black Lion","Pubs","Kilburn","North","","Grade II-listed, North Indian-inspired food, live music, beer garden, live sport","Pubs with gardens","Listed Kilburn pub with charcoal-oven cooking.","NW6 2BY"],["The Devonshire Balham","Pubs","Balham","South","","dates to 1821, beer garden, open fire, live sport, dog-friendly","Pubs with gardens, Cosy pubs","Balham pub with both a beer garden and an open fire.","SW12 9AN"],["Lamb and Flag","Pubs","Covent Garden","Central","","dates to 1722, open fire, historic","Historic pubs","One of Covent Garden's oldest pubs, down an alley.","WC2E 9EB"],["Crown & Anchor Brixton","Pubs","Brixton","South","","craft beer, Sunday roast, Southern US-style food","Sunday roasts","Brixton craft beer pub with American-style food.","SW9 6AQ"],["The Waterside","Pubs","Chelsea","South","","riverside terrace, gastro food, live sport","Riverside pubs","South-facing terrace right on the river.","SW6 2SU"],["Rose & Crown","Pubs","Stoke Newington","North","","","","",""],["London Steakhouse Co. City","Restaurants","City of London","Central","","steak, cocktails","","Steak restaurant in the City.",""],["Colonel Saab High Holborn","Restaurants","Holborn","Central","","Indian, retro interiors","Special occasions","Indian restaurant in a striking retro building.",""],["Tank & Paddle Minster Court","Restaurants","City of London","Central","","pizza, craft beer","","Casual pizza and craft beer spot.",""],["Camino Monument","Restaurants","City of London","Central","","Spanish, cheese and charcuterie","","Relaxed Spanish tapas restaurant.",""],["Dehesa","Restaurants","Soho","Central","","Spanish-Italian tapas, cocktails","","Low-key tapas in Soho.",""],["Whitcomb's","Restaurants","Leicester Square","Central","£££","French-Mediterranean, elegant","Special occasions","Elegant French-Mediterranean dining.",""],["Vicinity","Restaurants","City of London","Central","","street food-style menu, Tower Bridge views","Places with a view","Restaurant with Tower Bridge views.",""],["Quaglino's","Restaurants","St James's","Central","£££","live music, DJs, European-Middle Eastern","Special occasions","Glamorous dining room with live music.",""],["Mint Leaf Lounge","Restaurants","Liverpool Street","Central","","Indian, tandoor grill, cocktails","","Modern Indian with a cocktail bar.",""],["Inamo Covent Garden","Restaurants","Covent Garden","Central","£££","Pan-Asian, tablet ordering, sushi, cocktail bar","Group nights out","Pan-Asian with order-from-your-table screens.",""],["Roti King","Bites and street food","Euston","Central","££","Malaysian, roti canai, open kitchen","Cheap eats under £10","Malaysian roti canai, several sites around London.",""],["Padella","Bites and street food","London Bridge","Central","££","handmade pasta, Bib Gourmand","Cheap eats under £10","Fresh handmade pasta; expect a queue.","SE1 1TQ"],["BAO","Bites and street food","Soho","Central","£","Taiwanese steamed buns, karaoke at some sites","Cheap eats under £10","Taiwanese steamed buns from under £5 each.",""],["Govinda's","Bites and street food","Soho","Central","£","vegetarian, vegan, Indian, since 1979","Cheap eats under £10","Long-running vegetarian Indian, thalis under £8.","W1D 3DL"],["Guacamoles","Bites and street food","Peckham","South","££","tacos, hand-pressed tortillas, birria, vegan options","Cheap eats under £10","Tacos on hand-pressed tortillas on Rye Lane.","SE15 5BY"],["Thai West Cafe","Bites and street food","Soho","Central","£","cash only, family-run, vegetarian and vegan options","Cheap eats under £10","Family-run Thai lunch spot, around £10.","W1F 9UX"],["Yada's Green Kitchen","Bites and street food","Peckham","South","£","BYOB, Kurdish-inspired mezze and grills","Cheap eats under £10","Kurdish-style grills and mezze, bring your own drinks.","SE15 4RZ"],["ADOH!","Bites and street food","Covent Garden","Central","££","Sri Lankan street food, kothu","Cheap eats under £10","Walk-in Sri Lankan street food.","WC2E 7LJ"],["Wong Kei","Bites and street food","Soho","Central","££","Cantonese, big portions, good for groups","Cheap eats under £10","Old-school Chinatown Cantonese with big portions.","W1D 6PX"],["Jupiter Burger","Bites and street food","Hackney","East","£","smash burgers, Netil Market, veggie option","Cheap eats under £10","Smash burger and fries for about £10 at Netil Market.","E8 3RL"],["Fare Restaurant + Bar","Cafés and brunch","Clerkenwell","Central","£££","brunch set menu, bottomless option, pizzas","Brunch","Brunch set menu with a bottomless option.",""],["BiBo Shoreditch","Cafés and brunch","Shoreditch","East","","Spanish tapas brunch, bottomless sangria","Brunch","Spanish-style weekend brunch.",""],["The Little Blue Door","Cafés and brunch","Fulham","West","","bottomless cocktails, dancing","Brunch, Group nights out","Party brunch that turns into dancing.",""],["DoubleTree Kensington","Cafés and brunch","Kensington","West","","private dining pods","Brunch","Hotel brunch with private dining pods.",""],["Vinoteca Farringdon","Cafés and brunch","Farringdon","Central","","Mediterranean brunch, wine list","Brunch","Saturday brunch at a wine-focused restaurant.",""],["The Breakfast Club","Cafés and brunch","Hoxton","East","££","all-day breakfast, pancakes, waffles","Brunch","All-day breakfasts and pancake stacks.",""],["Eastway Brasserie","Cafés and brunch","Liverpool Street","Central","","DIY bloody mary bar, open kitchen","Brunch","Sunday brunch with a make-your-own bloody mary bar.",""],["Smith's Bar & Grill","Cafés and brunch","Paddington","West","£££","bottomless option, classic brunch","Brunch","Classic brunch with a bottomless option.",""],["Bobo Social Ealing","Cafés and brunch","Ealing","West","","bloody mary trolley, vegetarian full English","Brunch","Weekend brunch with a bloody mary trolley.",""],["The Anthologist","Cafés and brunch","City of London","Central","","bottomless bloody marys, pancakes","Brunch","Sunday brunch in the City.",""],["Huckster","Food halls and food markets","Paddington","West","","street food, bar, club","Group nights out","Multi-level street food, bar and club.",""],["Market Halls","Food halls and food markets","Oxford Street","Central","","food courts, bars, several sites","Group nights out","Food halls with plenty of choice for groups.",""],["Seven Dials Market","Food halls and food markets","Covent Garden","Central","","street food, bao, Mexican","Group nights out","Covered street food market in Covent Garden.",""],["Boxhall City","Food halls and food markets","Liverpool Street","Central","","14 kitchens, rooftop terrace, two bars, entertainment","Group nights out","14 kitchens plus a rooftop terrace.",""],["Pop Brixton","Food halls and food markets","Brixton","South","","shipping containers, live music, courtyard","Group nights out","Shipping-container food and drink with live music.",""],["Mercato Metropolitano","Food halls and food markets","Elephant and Castle","Central","","40+ stalls, ramen, seafood, ice cream","Group nights out","Over 40 food stalls under one roof.",""],["Vauxhall Food & Beer Garden","Food halls and food markets","Vauxhall","Central","","beer garden, international stalls, live sport","Pubs with gardens","Outdoor food stalls and beer garden.",""],["Arbour","Food halls and food markets","Olympia","West","","large food court","Group nights out","Huge food court at Olympia.",""],["Peckham Levels","Food halls and food markets","Peckham","South","","independent food, cocktails, crafts, records","Hidden gems and quirky spots","Multi-storey car park turned food and creative space.",""],["Canteen Food Hall & Bar","Food halls and food markets","Greenwich","East","","six kitchens, indoor and outdoor terraces","","Six independent kitchens in Greenwich.",""],["Hawksmoor Seven Dials","Sunday roasts","Covent Garden","Central","£££","steak, roast","Sunday roasts","Steakhouse roast with dry-aged beef.",""],["Blacklock Soho","Sunday roasts","Soho","Central","££","chophouse, sharing roast","Sunday roasts","Chophouse roast with an all-in sharing option.",""],["Origin City","Sunday roasts","Farringdon","Central","£££","whole-animal kitchen, sharing feast","Sunday roasts","Sunday feast from its own farm's meat.","EC1A 9JR"],["temper Soho","Sunday roasts","Soho","Central","£££","live-fire, sharing roast, bottomless option","Sunday roasts","Fire-cooked sharing roast.","W1F 0DF"],["Roast","Sunday roasts","London Bridge","Central","£££","above Borough Market, city views","Sunday roasts","Roast above Borough Market with city views.","SE1 1TL"],["The Twenty Two","Sunday roasts","Mayfair","Central","£££","hotel dining room, special occasions","Sunday roasts, Special occasions","Smart hotel roast for a special occasion.","W1K 2RX"],["The Blue Boar Pub","Sunday roasts","Westminster","Central","£££","gastropub, bloody mary trolley, vegetarian option","Sunday roasts","Gastropub roast with a bloody mary trolley.","SW1H 9LQ"],["Cora Pearl","Sunday roasts","Covent Garden","Central","£££","townhouse, Highland beef","Sunday roasts","Townhouse restaurant roast in Covent Garden.","WC2E 8NA"],["Drake and Morgan King's Cross","Late-night food","King's Cross","Central","","British food, burgers, cocktails","Late-night bites","Bar-restaurant for late food and cocktails.",""],["VQ","Late-night food","Bloomsbury","Central","","open 24 hours","Late-night bites","Open round the clock for food and drinks.",""],["Paradise By Way of Kensal Green","Late-night food","Kensal Green","North","","late weekend opening, food and drinks","Late-night bites","Pub with late weekend opening and food.",""],["28-50 By Night","Late-night food","Marylebone","Central","","steaks, live jazz","Late-night bites","Late steak and live jazz.",""],["La Terraza Tapas Bar","Late-night food","Clapham","South","","Spanish small plates, terrace","Late-night bites","Tapas with a terrace in Clapham.",""],["Boulevard Brasserie","Late-night food","Covent Garden","Central","","French bistro, candlelit","Late-night bites","Candlelit French bistro near the theatres.",""],["Aquum","Late-night food","Clapham","South","","Greek-inspired, party atmosphere","Late-night bites, Group nights out","Greek-inspired food with a party vibe.",""],["Tigerbay Hanger Lane","Late-night food","Ealing","West","","Lebanese, cocktails, shisha","Late-night bites","Lebanese food served until nearly 3am.",""],["Disrepute","Cocktail bars","Soho","Central","££","basement speakeasy, 1960s interiors, jazz","Hidden bars","1960s-style basement bar in Kingly Court.","W1F 9RS"],["Swift Soho","Cocktail bars","Soho","Central","££","award-winning, live piano, whisky library","","Award-winning bar with live piano.","W1D 4TQ"],["Oriole","Cocktail bars","Covent Garden","Central","££","Latin American-inspired, small plates, live music","Pubs with live music","Live music and Latin-inspired cocktails.","WC2E 9AB"],["Basement Sate","Cocktail bars","Soho","Central","££","desserts with cocktails, masterclasses","Hidden bars","Basement bar pairing cocktails with desserts.","W1F 8HN"],["Discount Suit Company","Cocktail bars","Spitalfields","East","££","hidden former tailor's room, sharing pitchers","Hidden bars, Cheap cocktails","Tiny hidden bar with good-value cocktails.","E1 7TB"],["Fitz's","Cocktail bars","Bloomsbury","Central","££","hotel bar, colourful interiors","Special occasions","Colourful hotel bar at the Kimpton Fitzroy.","WC1B 5BE"],["Connaught Bar","Cocktail bars","Mayfair","Central","£££","martini trolley, luxury hotel bar","Special occasions","Famous for its martini trolley.","W1K 2AL"],["Nancy's","Cocktail bars","London Bridge","Central","","70s-glam, Shard views, weekend DJs","Places with a view","Fourth-floor 70s-style bar with Shard views.","SE1 2SX"],["Long Bar at Sanderson","Cocktail bars","Fitzrovia","Central","££","hotel bar, whisky menu","","Sleek hotel bar with a strong whisky list.","W1T 3NG"],["Reverend J W Simpson","Cocktail bars","Fitzrovia","Central","££","basement in a former flat, foraged ingredients","Hidden bars","Basement bar in an old flat on Goodge Street.","W1T 2QT"],["Gordon's Wine Bar","Wine bars","Embankment","Central","","oldest wine bar, candlelit vaults, terrace","Historic pubs","London's oldest wine bar, in candlelit vaults.","WC2N 6NE"],["Noble Rot","Wine bars","Holborn","Central","£££","award-winning wine list, small plates","Special occasions","Wine bar with an award-winning list.",""],["The Olde Wine Shades","Wine bars","City of London","Central","","survived the Great Fire, wine flights","Historic pubs","Wine bar in a building that survived the Great Fire.","EC4R 0DP"],["The Boot and Flogger","Wine bars","London Bridge","Central","","exposed brick, rooms to explore","","Old-style wine bar with brick-lined rooms.","SE1 1TA"],["Champagne Charlies","Wine bars","Embankment","Central","","under railway arches","Hidden bars","Basement wine bar under Charing Cross arches.","WC2N 6NG"],["El Vino Blackfriars","Wine bars","City of London","Central","","traditional cellar bar","","Traditional cellar-style wine bar.","EC4V 6BJ"],["The Mug House","Wine bars","London Bridge","Central","","antique-filled interiors","","Wine bar packed with antiques.","SE1 2PF"],["Le Beaujolais","Wine bars","Soho","Central","","French wines only, since 1972","","French-only wine bar near Leicester Square.",""],["Balfour At Bow Wine Vaults","Wine bars","City of London","Central","","own-vineyard wines, terrace","","Wine from its own vineyard, with a terrace.",""],["Pretty Decent Brewery & Taproom","Craft beer and taprooms","Walthamstow","East","","20 taps, outdoor area, pizza","Pubs with gardens","20 rotating taps and a big outdoor area.",""],["Signature Brew Blackhorse Road","Craft beer and taprooms","Walthamstow","East","","12 beer lines, live music at weekends","Pubs with live music","Brewery taproom with weekend live music.",""],["Big Hug Social","Craft beer and taprooms","Bermondsey","South","","10 taps, pizza next door","","Bermondsey taproom with pizza and pint deals.",""],["Bird House Brewery","Craft beer and taprooms","Herne Hill","South","","railway arch, terrace, live music, DJs","","Railway-arch brewery with a sunny terrace.",""],["German Kraft Mayfair","Craft beer and taprooms","Mayfair","Central","","roof terrace, German-style beers","Rooftop bars","German-style beers with a roof terrace.",""],["Guinness Open Gate Brewery","Craft beer and taprooms","Covent Garden","Central","","experimental brews, dining","","Guinness's London brewery with exclusive brews.",""],["Malt Haus","Craft beer and taprooms","Walthamstow","East","","quiz nights, outdoor terrace, Moroccan street food","Pub quizzes","Brewery bar with quizzes and Moroccan street food.",""],["Hackney Church Brew Co","Craft beer and taprooms","Hackney","East","","six house beers, Indian food","","Brewery taproom serving Indian food.",""],["Wimbledon Brewery Tap","Craft beer and taprooms","Wimbledon","South","","outdoor space, sports screens","","Brewery tap with outdoor sports screens.",""],["The Old Brewery","Craft beer and taprooms","Greenwich","East","","brewed on site, big outdoor terrace","Pubs with gardens","Historic Greenwich pub with a big terrace.",""],["London Bridge Rooftop","Rooftop bars","London Bridge","Central","££","Shard and Tower Bridge views, weekend DJs, happy hour","Places with a view","Rooftop with Shard and Tower Bridge views.","SE1 2SX"],["Florattica","Rooftop bars","Aldgate","Central","£££","floral décor, City views, live music Fri–Sat","Places with a view","Flower-filled 11th-floor bar with City views.","EC3N 1AX"],["Sky Garden","Viewpoints","City of London","Central","Free","free to visit, 360° views, indoor gardens, bars","Free in the rain, Places with a view","Free indoor garden 35 floors up: book a slot.","EC3M 8AF"],["Wagtail","Rooftop bars","City of London","Central","£££","two terraces, landmark views, DJs","Places with a view","Two terraces with views of St Paul's and the Shard.","EC4N 7HR"],["Radio Rooftop","Rooftop bars","Covent Garden","Central","£££","heated terraces, DJs, happy hour Mon–Wed","Places with a view","Hotel rooftop on the Strand with heated terraces.","WC2R 1HA"],["Aviary","Rooftop bars","Finsbury Square","Central","£££","open-air terrace, City views, winter igloos","Places with a view, Late-night bites","Open-air terrace with City skyline views.","EC2A 1DX"],["Madison","Rooftop bars","St Paul's","Central","£££","beside St Paul's, large terrace, DJs","Places with a view","Big terrace right next to St Paul's.","EC4M 9AF"],["Los Mochis London City","Rooftop bars","Liverpool Street","Central","£££","Mexican-Japanese, terrace, DJs","Places with a view","Mexican-Japanese food on a City rooftop.","EC2M 2AT"],["Duck and Waffle","Rooftop bars","Liverpool Street","Central","£££","40th floor, open 24/7","Places with a view, Late-night bites","40th-floor restaurant open all night.","EC2N 4AY"],["Frank's Cafe","Rooftop bars","Peckham","South","","car park rooftop, skyline views","Places with a view","Summer rooftop bar on top of a Peckham car park.","SE15"],["Zum Barbarossa","Speakeasies and hidden bars","Soho","Central","","Art Nouveau interiors, DJ","Hidden bars","Speakeasy with Art Nouveau interiors.","W1D 3SH"],["SOMA Soho","Speakeasies and hidden bars","Soho","Central","","low-lit, curtained booths, creative cocktails","Hidden bars","Moody bar with curtained booths.","W1D 7HJ"],["Opium","Speakeasies and hidden bars","Soho","Central","","Chinatown, dim sum, three bars","Hidden bars","Chinatown cocktail den with dim sum.","W1D 6JE"],["Jack Solomons Club","Speakeasies and hidden bars","Soho","Central","","live jazz, soul, blues, piano","Pubs with live music","Live jazz and blues club.","W1D 7NB"],["Ottie's Salon","Speakeasies and hidden bars","Bloomsbury","Central","","live jazz, cigar terrace","Hidden bars","Jazz bar with a cigar terrace.","WC1B 5JD"],["Engel Bar","Speakeasies and hidden bars","City of London","Central","","Art Deco, inside the Royal Exchange","Hidden bars","Art Deco bar inside the Royal Exchange.","EC3V 3LQ"],["The Lucky Pig Fitzrovia","Speakeasies and hidden bars","Fitzrovia","Central","","art deco, masterclasses","Hidden bars","Art Deco basement bar.","W1W 6BB"],["Sibin Speakeasy","Speakeasies and hidden bars","Embankment","Central","","hidden bookcase entrance, 170+ whiskies, live jazz","Hidden bars","Enter through a bookcase; huge whisky list.","SW1A 2HN"],["The Lock Inn","Live music bars","Hackney","East","","canalside beer garden, dog-friendly","Pubs with gardens, Pubs with live music","Canalside pub with live music.",""],["Signature Brew Haggerston","Live music bars","Haggerston","East","","live music, comedy, quizzes","Pubs with live music","Canalside taproom with gigs and comedy.",""],["The Ship","Live music bars","Southwark","Central","","live music Thu–Fri, Sunday Irish session","Pubs with live music","Live bands Thursday and Friday, Irish session Sundays.",""],["The Faber Fox","Live music bars","Crystal Palace","South","","weekly bands and DJs, terrace, live sport","Pubs with live music","Crystal Palace pub with weekly live bands.",""],["The Fox & Firkin","Live music bars","Lewisham","South","","pub and music venue","Pubs with live music","Lewisham pub that doubles as a gig venue.",""],["The Hop Poles","Live music bars","Hammersmith","West","","live music Fridays","Pubs with live music","Friday night live music in Hammersmith.",""],["The Old Frizzle","Live music bars","Wimbledon","South","","weekly gigs, Sunday quiz, DJs","Pubs with live music, Pub quizzes","Wimbledon pub with weekly gigs and a Sunday quiz.",""],["The Half Moon","Live music bars","Putney","South","","music venue since the 1960s","Pubs with live music","Long-running Putney music pub.",""],["The Victoria","Live music bars","Dalston","East","","live music programme","Pubs with live music","Dalston local with a busy gig calendar.",""],["The Elmhurst","Games and activities","Tottenham","North","","four foosball tables, large beer garden","Group nights out, Pubs with gardens","Pub with pro foosball tables and a big garden.","N17 6XE"],["Bola 8 - The Pool Lounge","Games and activities","Elephant and Castle","Central","","pool, bar games, late dancing","Group nights out","Pool bar that turns into a late dance spot.",""],["Pitch Wharf","Games and activities","Canary Wharf","East","","golf simulator bays","Group nights out","Golf simulator bar with hundreds of courses.","E14 5RE"],["The Lucky Goat","Games and activities","City of London","Central","","pool, darts, shuffleboard, air hockey","Group nights out","City bar full of pub games.","EC4M 9BE"],["Annie's Room","Games and activities","Putney","South","","electronic darts, pizza","Group nights out","Electronic darts and sourdough pizza.","SW15 2SH"],["Baranis","Games and activities","Holborn","Central","","indoor petanque, foosball, cocktails","Group nights out","Basement bar with an indoor petanque court.","WC2A 1PP"],["Leadbelly's Bar","Games and activities","Temple","Central","","darts, table tennis, beer pong","Group nights out","Darts, table tennis and beer pong.","WC2R 3JF"],["Clays","Games and activities","City of London","Central","","simulated clay shooting, cocktails","Group nights out","Virtual clay pigeon shooting bar.","EC2R 6BH"],["Ballie Ballerson","Games and activities","Shoreditch","East","","adult ball pits, cocktails","Hidden gems and quirky spots, Group nights out","Ball pits for grown-ups, with cocktails.",""],["The Murdér Express","Games and activities","Bethnal Green","East","£££","murder-mystery dinner on a train set","Hidden gems and quirky spots","Murder-mystery dinner in a vintage-style train carriage.",""],["Alcotraz","Games and activities","","Central","£££","immersive prison bar, bring your own spirit","Group nights out","Immersive prison-themed cocktail experience.",""],["Floating Hot Tub Tour","Games and activities","Canary Wharf","East","£££","hot tub boat, guided docks tour","Hidden gems and quirky spots","Hot tub boat trip around the Docklands.",""],["QUEENS Skate Dine Bowl","Games and activities","Bayswater","West","","bowling, ice skating, arcade","Group nights out","Bowling, ice skating and arcade under one roof.","W2 4QP"],["F1 Arcade","Games and activities","St Paul's","Central","","F1 racing simulators, cocktails","Group nights out","F1 racing simulators with cocktails.","EC4M 9AF"],["Substation Brixton","Active","Brixton","South","££","100+ climbing routes, gym, café","Try something new","Bouldering with weekly new sets.","SW2 5DZ"],["The Arch Climbing Centre","Active","Bermondsey","South","££","bouldering, beginner lessons, social nights","Try something new","Bouldering walls with beginner lessons.",""],["Castle Climbing Centre","Active","Stoke Newington","North","££","330+ boulders, roped routes, Victorian building","Try something new","Climbing inside a Victorian pumping station.","N4 2HA"],["Stronghold Climbing Centre","Active","Tottenham Hale","North","££","200+ problems, training boards, café","Try something new","Bouldering with training boards and a café.",""],["Westway Climbing Centre","Active","North Kensington","West","££","roped and bouldering, coaching","Try something new","Large climbing centre with lots of coaching.","W10 6RP"],["The Climbing Hangar Parsons Green","Active","Parsons Green","South","££","bouldering, café","Try something new","Bouldering chain with a café.","SW6 4HH"],["VauxWall Climbing Centre","Active","Vauxhall","Central","£","railway arches, training area, gym","Try something new","Climbing across six railway arches.",""],["The Reach Climbing Wall","Active","Woolwich","South","££","300+ boulders, auto-belays, roped routes","Try something new","Bouldering and roped climbing in south-east London.","SE18 5NR"],["Mile End Climbing Wall","Active","Mile End","East","££","big wall, sauna","Try something new","Large climbing wall with a sauna.","E3 5BE"],["The Purple Owl","Classes and workshops","Wandsworth","South","££","pottery painting, clay, pub and café","Try something new","Pottery painting and clay sessions.",""],["Mino Pottery Painting & Cafe","Classes and workshops","Dulwich","South","££","stoneware pottery painting, café","Try something new","Pottery painting café.",""],["Backyard Comedy Club","Comedy clubs and open mics","Bethnal Green","East","Free","mostly free shows, food, dancing after","Cheap comedy","Mostly free comedy shows, with dancing after.",""],["Good Ship Comedy","Comedy clubs and open mics","","Central","££","headliners and new acts","","Comedy night mixing headliners and new acts.",""],["The Camden Head","Comedy clubs and open mics","Camden","North","£","comedy every night, pub food","Cheap comedy","Pub comedy every night of the week.",""],["Comedy Cabin","Comedy clubs and open mics","East London","East","","new and established acts, nachos, cocktails","","Comedy club with nachos and cocktails.",""],["The Exhibit","Comedy clubs and open mics","Balham","South","","Wednesday comedy, three floors","","Wednesday comedy night in Balham.",""],["Candlemaker Comedy","Comedy clubs and open mics","Battersea","South","£","headliners Saturdays, new acts Sundays","Cheap comedy","£5 Thursday comedy in Battersea.",""],["Top Secret Comedy Club","Comedy clubs and open mics","Covent Garden","Central","","basement club, big names and new acts","","Basement club with big names dropping in.",""],["Big Belly Bar & Comedy Club","Comedy clubs and open mics","South Bank","Central","","food truck, bar","","Comedy club with a food truck.",""],["The Comedy Store","Comedy clubs and open mics","Leicester Square","Central","","famous club, established and new acts","","London's best-known comedy club.",""],["The Bill Murray","Comedy clubs and open mics","Angel","North","","shows seven days a week, beer garden, late licence","Cheap comedy, Pubs with gardens","Comedy pub with shows every night and a beer garden.",""],["Draughts","Arcades and board game cafés","Waterloo","Central","£","1,000+ board games, food and drinks","Free in the rain, Group nights out","Board game café with over 1,000 games.",""],["The Library Pot","Arcades and board game cafés","Richmond","South","£","hundreds of games, bar-café","Group nights out","Board game bar-café.",""],["Loading Bar","Arcades and board game cafés","Dalston","East","£","board games, arcade, consoles, table football","Group nights out","Games bar with board games, arcade and consoles.",""],["Escape Bar","Arcades and board game cafés","Stratford","East","","all-you-can-play, comedy, open mic, quizzes","Group nights out","Board games plus comedy and quiz nights.",""],["Rogues Quarter","Arcades and board game cafés","Kentish Town","North","£","Magic: The Gathering, wargaming tables","","Games shop with big tables for card and wargames.",""],["NQ64 Soho","Arcades and board game cafés","Soho","Central","","retro arcade, consoles, themed cocktails","Group nights out","Retro arcade bar with themed cocktails.","W1F 8SP"],["Four Quarters Peckham","Arcades and board game cafés","Peckham","South","","retro arcade cabinets, pizza, cocktails","Group nights out","Retro arcade bar on Rye Lane.","SE15 4TP"],["Babylon Park","Arcades and board game cafés","Camden","North","Free","indoor rollercoaster, 100+ arcade games","Free in the rain","Free-entry arcade with an indoor rollercoaster.","NW1 8QU"],["The British Museum","Museums","Bloomsbury","Central","Free","world history collection","Free in the rain","Free, vast collection covering world history.",""],["Natural History Museum","Museums","South Kensington","West","Free","whale skeleton, dinosaurs","Free in the rain","Free; famous for its whale skeleton.",""],["Science Museum","Museums","South Kensington","West","Free","Apollo 10 module, hands-on Wonderlab","Free in the rain","Free, with a hands-on gallery (charged).",""],["V&A","Museums","South Kensington","West","Free","design, fashion, ceramics, jewellery","Free in the rain","Free design and fashion museum.",""],["Imperial War Museum","Museums","Lambeth","Central","Free","Spitfire, trench experience","Free in the rain","Free museum of modern conflict.",""],["London Museum","Museums","City of London","Central","Free","London's history","Free in the rain","Free museum of London's history.",""],["Horniman Museum and Gardens","Museums","Forest Hill","South","Free","walrus, musical instruments, gardens, butterfly house","Free in the rain","Free museum with gardens and a famous walrus.",""],["The Postal Museum","Museums","Clerkenwell","Central","","underground Mail Rail ride","Hidden gems and quirky spots, Free in the rain","Ride the old underground Mail Rail.",""],["National Gallery","Galleries","Trafalgar Square","Central","Free","2,300+ European paintings","Free in the rain","Free, with Van Gogh, Turner and Monet.",""],["National Portrait Gallery","Galleries","Trafalgar Square","Central","Free","portraits","Free in the rain","Free gallery of famous faces.",""],["Tate Modern","Galleries","Bankside","Central","Free","modern art, former power station, river terrace","Free in the rain","Free modern art in a former power station.",""],["Saatchi Gallery","Galleries","Chelsea","West","Free","contemporary art","Free in the rain","Contemporary art gallery.",""],["The Wallace Collection","Galleries","Marylebone","Central","Free","Old Masters, armour, historic townhouse","Free in the rain","Free paintings and armour in a grand townhouse.",""],["God's Own Junkyard","Galleries","Walthamstow","East","Free","neon signs, film props, café","Hidden gems and quirky spots, Free in the rain","Warehouse full of neon signs; free entry.",""],["Hampstead Heath","Parks and gardens","Hampstead","North","Free","woodland, swimming ponds, Parliament Hill views","Free in the sun","Wild heath with swimming ponds and city views.",""],["Clapham Common","Parks and gardens","Clapham","South","Free","ponds, bandstand","Free in the sun","Big common with a Victorian bandstand.",""],["Kensington Gardens","Parks and gardens","Kensington","West","Free","Peter Pan statue, Serpentine Gallery nearby","Free in the sun","Royal park with the Peter Pan statue.",""],["London Fields","Parks and gardens","Hackney","East","Free","lido, picnics","Free in the sun","Hackney's favourite park, with a heated lido.",""],["Holland Park","Parks and gardens","Holland Park","West","Free","Kyoto Garden, peacocks","Free in the sun, Hidden gems and quirky spots","Japanese garden and peacocks.",""],["Gunnersbury Park","Parks and gardens","Gunnersbury","West","Free","museum, boating lake","Free in the sun","Park with a free museum and boating lake.",""],["Battersea Park","Parks and gardens","Battersea","South","Free","riverside, children's zoo","Free in the sun","Riverside Victorian park.",""],["Crystal Palace Park","Parks and gardens","Crystal Palace","South","Free","Victorian dinosaur sculptures","Free in the sun, Hidden gems and quirky spots","Victorian park with dinosaur sculptures.",""],["Hyde Park","Parks and gardens","Hyde Park","West","Free","Serpentine lido, events","Free in the sun","Huge central park with the Serpentine.",""],["Richmond Park","Parks and gardens","Richmond","South","Free","deer, Pembroke Lodge","Free in the sun","London's biggest park, with wild deer.",""],["St Dunstan in the East","Parks and gardens","City of London","Central","Free","ruined church garden","Hidden gems and quirky spots, Free in the sun","A ruined church turned secret garden.",""],["Parliament Hill","Viewpoints","Hampstead","North","Free","skyline view","Free in the sun, Places with a view","Classic free view over the London skyline.",""],["Little Venice to Camden","Walks and canal paths","Maida Vale","North","Free","Regent's Canal, narrowboats, about 2.5 miles","Free in the sun, Walks with a pub at the end","Canal walk past narrowboats, pub at each end.",""],["South Bank stroll","Walks and canal paths","South Bank","Central","Free","Thames, National Theatre, London Eye, about 1.8 miles","Free in the sun, Walks with a pub at the end","Riverside walk past the South Bank sights.",""],["Olympic Park loop","Walks and canal paths","Stratford","East","Free","River Lea, nature reserves, about 5.4 miles","Free in the sun, Walks with a pub at the end","Longer loop along the River Lea and Olympic Park.",""],["King's Cross to Haggerston","Walks and canal paths","King's Cross","Central","Free","Regent's Canal, about 2.2 miles","Free in the sun, Walks with a pub at the end","Canal walk from King's Cross to Haggerston.",""],["Kew to Hammersmith","Walks and canal paths","Kew","South","Free","quiet Thames path, about 5.2 miles","Free in the sun, Walks with a pub at the end","Quiet riverside walk ending at a Hammersmith pub.",""],["Greenwich Foot Tunnel","Hidden gems and quirky spots","Greenwich","East","Free","walk under the Thames","Free in the rain","Walk under the Thames for free.",""],["Brixton Windmill","Hidden gems and quirky spots","Brixton","South","","working windmill, 200+ years old","","London's last working windmill.",""],["Wapping beaches","Hidden gems and quirky spots","Wapping","East","Free","riverside beaches, smuggling history","Free in the sun","Little Thames beaches at low tide.",""],["Columbia Road Flower Market","Markets","Bethnal Green","East","Free","flowers, plants, independent shops","Free in the sun","Sunday flower market; go early.","E2 7RG"],["Brick Lane Market","Markets","Shoreditch","East","Free","vintage, art, street food","Vintage and second-hand","Sunday vintage, art and street food.","E1 6QR"],["Borough Market","Markets","London Bridge","Central","Free","100+ food traders, Victorian hall","","London's best-known food market.","SE1 1TL"],["Old Spitalfields Market","Markets","Spitalfields","East","Free","antiques, vintage, street food","Vintage and second-hand, Free in the rain","Covered market; Thursdays best for antiques.","E1 6EW"],["Greenwich Market","Markets","Greenwich","South","Free","crafts, antiques, food","Vintage and second-hand, Free in the rain","Covered historic market near the Cutty Sark.","SE10 9HZ"],["Portobello Road Market","Markets","Notting Hill","West","Free","antiques, vintage fashion","Vintage and second-hand","Famous antiques street market: Saturday is the big day.",""],["Maltby Street Market","Markets","Bermondsey","Central","Free","artisan food, natural wine, quieter","Hidden gems and quirky spots","Smaller, calmer food market under railway arches.","SE1 3PA"],["Camden Market","Markets","Camden","North","Free","Stables Market, street food, live music","","Sprawling market with street food and vintage.",""],["Camden Passage","Vintage and second-hand","Angel","North","Free","antiques, independent boutiques","","Antiques stalls in a pretty Islington lane.",""],["Bermondsey Antique Market","Vintage and second-hand","Bermondsey","South","Free","early trade market, antiques, silverware","Hidden gems and quirky spots","Early-morning Friday antiques market.",""],["One Eighty One","Record shops","Holloway","North","","café and records by day, listening bar at night","Hidden gems and quirky spots","Record shop by day, listening bar by night.","N7 8LX"],["Next Door Records","Record shops","Shepherd's Bush","West","","wine bar, DJ and jazz nights","","Records plus wine and DJ nights.","W12 7LJ"],["Riff Raffs","Record shops","Croydon","South","","craft beer bar, basement vinyl","","Craft beer bar with a vinyl basement.","CR0 1PB"],["Rough Trade East","Record shops","Shoreditch","East","","large flagship, café, in-store gigs","Free in the rain","Big record shop with a café.","E1 6QL"],["Stranger Than Paradise","Record shops","Hackney","East","","curated stock, inside Mare Street Market","","Small curated shop in Mare Street Market.","E8 4RU"],["Idle Moments","Record shops","Bethnal Green","East","","hi-fi, natural wine, Japanese pressings","","Records, hi-fi and natural wine on Columbia Road.","E2 7QB"],["Sister Ray","Record shops","Soho","Central","","long-standing Berwick Street shop","","Long-running Soho record shop.","W1F 8TG"],["Third Man Records","Record shops","Soho","Central","","Jack White's shop, live room, record booth","Hidden gems and quirky spots","Jack White's shop with its own live room.","W1F 9BA"],["Phonica","Record shops","Soho","Central","","house and techno specialist","","Dance music specialist.","W1F 7ND"],["Out On The Floor Records","Record shops","Camden","North","","reggae and soul, bargain bins","","Reggae and soul specialist with bargain bins.","NW1 7HJ"],["Word on the Water","Bookshops","King's Cross","North","","floating bookshop on a barge, jazz and poetry nights","Hidden gems and quirky spots","Second-hand bookshop on a canal barge.","N1C 4AB"],["Daunt Books Marylebone","Bookshops","Marylebone","Central","","Edwardian shop, travel books by country","Free in the rain","Beautiful Edwardian shop, travel books by country.","W1U 4QW"],["Bookmongers","Bookshops","Brixton","South","","second-hand, resident cat","Hidden gems and quirky spots","Second-hand bookshop with a resident cat.","SW9 8LN"],["Foyles Charing Cross Road","Bookshops","Soho","Central","","five floors, café","Free in the rain","Huge five-floor bookshop with a café.","WC2H 0DT"],["London Review Bookshop","Bookshops","Bloomsbury","Central","","curated, author events, cake shop","","Curated bookshop with regular author talks.","WC1A 2JL"],["Libreria","Bookshops","Spitalfields","East","","design-led, no phones","Hidden gems and quirky spots","Phone-free bookshop with themed shelves.","E1 5JP"],["National Theatre Bookshop","Bookshops","South Bank","Central","","plays and theatre books","","Theatre and playtext specialist.","SE1 9PX"],["Climax Books","Bookshops","Soho","Central","","rare art and culture books","Hidden gems and quirky spots","Rare art and culture books.","W1F"]];
+// ---------- Discover layout: top tabs, pickers, featured carousel, rows by genre, full list ----------
+const TOPS = [['all','All'],['music','Music'],['sport','Sport'],['arts','Arts'],['more','More'],['places','Places']];
+const TOP_CATS = {music:['gigs','clubs'], sport:['sport'], arts:['theatre','comedy'], more:['food','markets','free']};
+const TOP_TINT = {music:'clubs', sport:'sport', arts:'theatre', more:'markets', places:'food'};
+const GENRES = {
+  music:['Clubs and dance','Alternative / indie','Jazz / blues','Hard rock','R&B / urban soul','Rock / pop','More music'],
+  sport:['American Football','Athletics','Basketball','Boxing','Cricket','Football','GAA','Golf','Rugby League','Rugby Union','Darts','More sport'],
+  arts:['Drama','Musicals','Opera','Theatre','Comedy'],
+  more:['Food and drink','Markets','Free']
+};
+function topOf(e){ return Object.keys(TOP_CATS).find(k => TOP_CATS[k].includes(e.cat)) || 'more'; }
+function genreOf(e){
+  const t = `${e.genre || ''} ${e.sub || ''} ${e.title}`.toLowerCase(), top = topOf(e);
+  if(top === 'music'){
+    if(e.cat === 'clubs' || /dance|electronic|house|techno|club night|garage|drum ?(&|and|n) ?bass|dnb|trance|disco/.test(t)) return 'Clubs and dance';
+    if(/alternative|indie|punk|emo|shoegaze|post-rock/.test(t)) return 'Alternative / indie';
+    if(/jazz|blues|swing/.test(t)) return 'Jazz / blues';
+    if(/metal|hard rock|hardcore|grunge/.test(t)) return 'Hard rock';
+    if(/r&b|urban|soul|hip-hop|hip hop|rap|funk|grime|afrobeat|reggae/.test(t)) return 'R&B / urban soul';
+    if(/rock|pop/.test(t)) return 'Rock / pop';
+    return 'More music';
+  }
+  if(top === 'sport'){
+    if(/american football|\bnfl\b/.test(t)) return 'American Football';
+    if(/athletic|marathon|running/.test(t)) return 'Athletics';
+    if(/basketball|\bnba\b/.test(t)) return 'Basketball';
+    if(/boxing|fight night/.test(t)) return 'Boxing';
+    if(/cricket/.test(t)) return 'Cricket';
+    if(/\bgaa\b|hurling|gaelic/.test(t)) return 'GAA';
+    if(/rugby league/.test(t)) return 'Rugby League';
+    if(/rugby/.test(t)) return 'Rugby Union';
+    if(/darts/.test(t)) return 'Darts';
+    if(/golf/.test(t)) return 'Golf';
+    if(/football|soccer|\bfc\b| v | vs /.test(t)) return 'Football';
+    return 'More sport';
+  }
+  if(top === 'arts'){
+    if(e.cat === 'comedy' || /comedy|stand-up|stand up/.test(t)) return 'Comedy';
+    if(/opera/.test(t)) return 'Opera';
+    if(/musical/.test(t)) return 'Musicals';
+    if(/drama|play\b/.test(t)) return 'Drama';
+    return 'Theatre';
+  }
+  return e.cat === 'markets' ? 'Markets' : e.cat === 'free' || e.pmin === 0 && e.cat !== 'food' ? 'Free' : 'Food and drink';
+}
+
+// Places from the Who's In places spreadsheet (DesignMyNight guides). Details not checked yet.
+const PLACE_GROUPS = {
+  Eat:['Restaurants','Bites and street food','Cafés and brunch','Food halls and food markets','Sunday roasts','Late-night food'],
+  Drink:['Pubs','Cocktail bars','Wine bars','Craft beer and taprooms','Rooftop bars','Speakeasies and hidden bars','Live music bars'],
+  Do:['Games and activities','Active','Classes and workshops','Comedy clubs and open mics','Arcades and board game cafés'],
+  See:['Museums','Galleries','Parks and gardens','Viewpoints','Walks and canal paths','Hidden gems and quirky spots'],
+  Shop:['Markets','Vintage and second-hand','Record shops','Bookshops']
+};
+const PLACE_TINT = {Eat:'food', Drink:'clubs', Do:'sport', See:'theatre', Shop:'markets'};
+const PUB_SUBS = [['garden','Pub gardens',/garden|terrace|outdoor/i],['music','Live music',/live music|jazz|DJ/i],['quiz','Quiz nights',/quiz/i],['sport','Live sport',/live sport/i]];
+const COLLECTIONS = ['Pubs with gardens','Cheap eats under £10','Free in the rain','Free in the sun','Hidden gems and quirky spots','Places with a view','Pubs with live music','Late-night bites','Sunday roasts','Group nights out'];
+const PLACES = PLACES_RAW.map((p, i) => {
+  const group = Object.keys(PLACE_GROUPS).find(g => PLACE_GROUPS[g].includes(p[1])) || 'Do';
+  return {id:'p' + i, name:p[0], cat:p[1], area:p[2], region:p[3], budget:p[4], tags:p[5], colls:p[6].split(',').map(x => x.trim()).filter(Boolean), why:p[7], pc:p[8], group};
+});
+
+function inScope(e){ return S.top === 'all' || topOf(e) === S.top; }
+function genreScoped(e){ return !S.genre || genreOf(e) === S.genre; }
+function pool(){ const q = S.q.trim().toLowerCase(); return EVENTS.filter(e => matches(e, S.f, q) && inScope(e)); }
+
+function dateBlock(e){
+  const d = D(e.date);
+  return `<span class="dblock" aria-hidden="true"><span>${d.toLocaleDateString('en-GB',{weekday:'short'}).toUpperCase()}</span><b>${d.getDate()}</b><span>${d.toLocaleDateString('en-GB',{month:'short'}).toUpperCase()}</span></span>`;
+}
+function friendLine(id){
+  const st = status(id), f = friendsOf(id);
+  if(st === 'on') return `<span class="fline">Plan's on · ${going(id).length} going</span>`;
+  if(f.length) return `<span class="fline">${esc(FRIENDS[f[0]].name)}${f.length > 1 ? ' + ' + (f.length - 1) : ''} would go</span>`;
+  if(st === 'waiting') return `<span class="fline">You'd go</span>`;
+  return '';
+}
+function tcard(e){
+  const d = D(e.date), im = imgUrl(e);
+  return `<button class="tcard" data-act="event" data-id="${e.id}">
+    <span class="tart" style="background:var(--c-${e.cat})">${im ? `<img class="cover" src="${esc(im)}" alt="" loading="lazy">` : `<span class="big">${esc(genreOf(e))}</span>`}
+      <span class="dbadge">${d.getDate()}<small>${d.toLocaleDateString('en-GB',{month:'short'})}</small></span></span>
+    <span class="tt">${esc(e.title)}</span>
+    <span class="sub">${esc(e.venue || e.area)}${e.venue ? ' · ' + esc(e.area) : ''}</span>
+    ${friendLine(e.id)}
+  </button>`;
+}
+function rowSec(title, list, act, id){
+  if(!list.length) return '';
+  return `<div class="rhead"><h4>${esc(title)}</h4>${act ? `<button class="seeall" data-act="${act}" data-id="${esc(id)}">See all</button>` : ''}</div>
+  <div class="rrow" data-row="${esc(title)}">${list.slice(0, 10).map(tcard).join('')}</div>`;
+}
+function featCards(list){
+  if(!list.length) return '';
+  return `<div class="feat" aria-label="Featured">${list.map(e => {
+    const im = imgUrl(e), fr = friendLine(e.id);
+    return `<button class="fcard" data-act="event" data-id="${e.id}" style="background:var(--c-${e.cat})">${im ? `<img class="cover" src="${esc(im)}" alt="" loading="lazy"><span class="shade"></span>` : ''}
+      <span class="ftxt${im ? ' onimg' : ''}"><span class="ftag">${fr ? fr.replace(/<[^>]+>/g, '') : esc(genreOf(e))}</span><span class="fttl">${esc(e.title)}</span><span>${esc(fmt(e.date))} · ${esc(e.area)} · ${esc(e.price)}</span></span>
+    </button>`;
+  }).join('')}</div>`;
+}
+function pickers(){
+  const r = S.f.regions, locVal = S.f.areas.length || r.length > 1 ? 'several' : r[0] || 'all';
+  return `<div class="pickers">
+    <label class="picker" for="locSel">${I.pin}<span><small>Location</small><select id="locSel">
+      <option value="all" ${locVal === 'all' ? 'selected' : ''}>All of London</option>
+      ${REGIONS.map(x => `<option value="${x}" ${locVal === x ? 'selected' : ''}>${x} London</option>`).join('')}
+      ${locVal === 'several' ? '<option value="several" selected>Your areas</option>' : ''}
+    </select></span></label>
+    ${S.top === 'places' ? `<label class="picker" for="budSel">${I.ticket}<span><small>Budget</small><select id="budSel">${['','Free','£','££','£££'].map(b => `<option value="${b}" ${S.pbud === b ? 'selected' : ''}>${b === '' ? 'Any budget' : b === 'Free' ? 'Free' : b === '£' ? '£ · under £10' : b === '££' ? '££ · £10–25' : '£££ · £25+'}</option>`).join('')}</select></span></label>`
+    : `<label class="picker" for="whenSel">${I.cal}<span><small>Dates</small><select id="whenSel">${WHENS.map(w => `<option value="${w[0]}" ${S.f.when === w[0] ? 'selected' : ''}>${w[0] === 'all' ? 'All dates' : w[1]}</option>`).join('')}</select></span></label>`}
+  </div>`;
+}
+function exploreHead(){
   const unread = S.notifs.filter(n => !n.read).length;
-  const q = S.q.trim();
-  const list = results(), chips = activeChips();
+  return `<div class="xhead">
+    <div class="top" style="margin-bottom:12px"><div class="brand">Who's In</div>
+    <button class="round" data-act="go" data-id="notifs" aria-label="Notifications${unread ? ', ' + unread + ' new' : ''}">${I.bell}${unread ? `<span class="dot">${unread}</span>` : ''}</button></div>
+    <label class="search" for="q">${I.search}<span class="sr">Search</span><input id="q" type="search" placeholder="${S.top === 'places' ? 'Search places, areas, types' : 'Search events, venues, areas'}" value="${esc(S.q)}" autocomplete="off"></label>
+    <nav class="toptabs" aria-label="Sections">${TOPS.map(t => `<button data-act="top" data-id="${t[0]}" aria-current="${S.top === t[0]}">${t[1]}</button>`).join('')}</nav>
+  </div>`;
+}
+
+function vExplore(){
+  if(S.top === 'places') return exploreHead() + pickers() + vPlaces();
+  const q = S.q.trim(), all = pool(), chips = activeChips();
+  const label = S.top === 'all' ? 'events' : TOPS.find(t => t[0] === S.top)[1].toLowerCase() + ' events';
+  let rows = '', feat = '';
+  if(!q){
+    const soon = all.filter(e => e.date <= addDays(TODAY, 14));
+    const withFriends = soon.filter(e => friendsOf(e.id).length && status(e.id) !== 'on');
+    const withImg = soon.filter(e => imgUrl(e) && !withFriends.includes(e));
+    const seen = new Set(), featured = [];
+    [...withFriends, ...withImg, ...soon].forEach(e => { if(featured.length < 5 && !seen.has(e.title)){ seen.add(e.title); featured.push(e); } });
+    feat = featCards(featured);
+    if(S.top === 'all'){
+      rows += rowSec('Your friends would go', all.filter(e => friendsOf(e.id).length));
+      rows += S.f.when === 'all' ? rowSec('This weekend', all.filter(e => e.date >= WK_FROM && e.date <= WK_TO)) : '';
+      ['music','sport','arts','more'].forEach(k => rows += rowSec(TOPS.find(t => t[0] === k)[1], all.filter(e => topOf(e) === k), 'top', k));
+      rows += S.f.price === 'any' ? rowSec('Under £10', all.filter(e => typeof e.pmin === 'number' && e.pmin <= 10)) : '';
+    } else {
+      GENRES[S.top].forEach(g => rows += rowSec(g, all.filter(e => genreOf(e) === g), 'genre', g));
+    }
+  }
+  const list = all.filter(genreScoped).slice();
+  const tm = e => e.h ?? 12, pr = e => (typeof e.pmin === 'number') ? e.pmin : 99999;
+  if(S.sort === 'friends') list.sort((a, b) => friendsOf(b.id).length - friendsOf(a.id).length || a.date.localeCompare(b.date) || tm(a) - tm(b));
+  else if(S.sort === 'cheapest') list.sort((a, b) => pr(a) - pr(b) || a.date.localeCompare(b.date) || tm(a) - tm(b));
   const shown = list.slice(0, S.limit);
-  const friendsPicks = EVENTS.filter(e => e.date >= TODAY && friendsOf(e.id).length && status(e.id) !== 'on').slice(0, 6);
-  const perDay = {}; list.forEach(e => perDay[e.date] = (perDay[e.date] || 0) + 1);
-  let body = '', lastDay = '';
-  shown.forEach(e => {
-    if(S.sort === 'soonest' && e.date !== lastDay){ if(lastDay) body += '</div>'; body += `<h5 class="dayh"><span>${dayLabel(e.date)}</span><span>${perDay[e.date]}</span></h5><div class="list">`; lastDay = e.date; }
-    const fr = friendsOf(e.id);
-    body += row(e, `${S.sort === 'soonest' ? e.time : fmt(e.date) + ' · ' + e.time} · ${e.venue ? e.venue + ', ' : ''}${e.area} · ${e.price}${fr.length ? ' · ' + fr.length + (fr.length > 1 ? ' friends' : ' friend') + ' would go' : ''}`);
-  });
-  if(S.sort === 'soonest' && lastDay) body += '</div>';
-  else body = `<div class="list">${body}</div>`;
-  return `
-  <div class="top"><div><div class="eyebrow">London</div><div class="brand">Who's In</div></div>
-  <button class="round" data-act="go" data-id="notifs" aria-label="Notifications${unread ? ', ' + unread + ' new' : ''}">${I.bell}${unread ? `<span class="dot">${unread}</span>` : ''}</button></div>
-  <label class="search" for="q">${I.search}<span class="sr">Search events</span><input id="q" type="search" placeholder="Search events, areas, types" value="${esc(S.q)}" autocomplete="off"></label>
+  const gl = S.top === 'all' ? [] : GENRES[S.top], gcount = {}; all.forEach(e => { const g = genreOf(e); gcount[g] = (gcount[g] || 0) + 1; });
+  const lrows = shown.map(e => {
+    const fr = friendLine(e.id);
+    return `<div class="lrow"><button class="open" data-act="event" data-id="${e.id}">${dateBlock(e)}<span class="lmain"><span class="ttl">${esc(e.title)}</span><span class="sub">${esc(e.time)} · ${e.venue ? esc(e.venue) + ', ' : ''}${esc(e.area)}</span><span class="sub">${S.top === 'all' ? esc(genreOf(e)) + ' · ' : ''}${esc(e.price)}</span>${fr}</span></button>${heartBtn(e.id)}</div>`;
+  }).join('');
+  return exploreHead() + pickers() + feat + rows + `
+  <div class="rhead" id="allList" style="margin-top:26px"><h4>${q ? 'Results' : S.genre ? esc(S.genre) : 'All ' + label}</h4><span class="sub">${list.length} result${list.length === 1 ? '' : 's'}</span></div>
+  ${gl.length ? `<div class="chips" role="group" aria-label="Genre" style="padding-top:0"><button class="chip" data-act="genre" data-id="" aria-pressed="${!S.genre}">All</button>${gl.filter(g => gcount[g] || S.genre === g).map(g => `<button class="chip" data-act="genre" data-id="${esc(g)}" aria-pressed="${S.genre === g}">${esc(g)}<span class="s">${gcount[g] || 0}</span></button>`).join('')}</div>` : ''}
   <div class="toolbar">
     <button class="fbtn" data-act="openSheet">${I.sliders}Filters${chips.length ? `<span class="n">${chips.length}</span>` : ''}</button>
     <label for="sortSel" class="sr">Sort by</label>
     <select id="sortSel" class="sortsel">${SORTS.map(s => `<option value="${s[0]}" ${S.sort === s[0] ? 'selected' : ''}>Sort: ${s[1]}</option>`).join('')}</select>
   </div>
-  <div class="chips" role="group" aria-label="Dates">${WHENS.map(w => `<button class="chip" data-act="fwhen" data-id="${w[0]}" aria-pressed="${S.f.when === w[0]}">${w[1]}</button>`).join('')}</div>
-  <div class="tilehead"><h4 class="sec" style="margin:18px 0 8px"><span>Browse by type</span></h4>${S.f.cats.length ? `<button class="linkbtn" data-act="clearCats">Show all types</button>` : ''}</div>
-  <div class="tiles" role="group" aria-label="Types of event">${catTiles()}</div>
   ${chips.length ? `<div class="active" aria-label="Active filters">${chips.map(c => `<button class="achip" data-act="rm" data-id="${esc(c[0])}" aria-label="Remove filter: ${esc(c[1])}">${esc(c[1])}<span aria-hidden="true">×</span></button>`).join('')}<button class="linkbtn" data-act="clearF">Clear all</button></div>` : ''}
-  ${friendsPicks.length && !q && !chips.length ? `<h4 class="sec"><span>Your friends would go</span></h4>
-  <div class="hrow">${friendsPicks.map(e => `<button class="hcard" data-act="event" data-id="${e.id}">${art(e, `<span style="position:absolute;top:10px;left:10px">${badge(e.id)}</span>`)}<span class="ttl">${esc(e.title)}</span><span class="sub">${fmt(e.date)} · ${e.time} · ${e.area}</span></button>`).join('')}</div>` : ''}
-  <div class="source">${META.sample ? 'Showing sample events. Real London events appear on the published site.' : `Live London events · updated ${esc(updatedText())}${META.ticketmaster ? ' · listings from Ticketmaster' : ''}`}</div>
-  <h4 class="sec"><span>${list.length} event${list.length === 1 ? '' : 's'} in London</span><span>${shown.length < list.length ? 'Showing ' + shown.length : ''}</span></h4>
-  ${list.length ? body + (shown.length < list.length ? `<button class="btn ghost more" data-act="more">Show ${Math.min(30, list.length - shown.length)} more</button>` : '') : `<div class="empty">No events match these filters.<br><button class="linkbtn" data-act="clearF">Clear all filters</button></div>`}`;
+  ${list.length ? `<div class="llist">${lrows}</div>` + (shown.length < list.length ? `<button class="btn ghost more" data-act="more">Load ${Math.min(30, list.length - shown.length)} more</button>` : '')
+    : `<div class="empty" style="margin-top:12px">Nothing matches.<br><button class="linkbtn" data-act="clearF">Clear all filters</button></div>`}
+  <div class="source">${META.sample ? 'Showing sample events. Real London events appear on the published site.' : `Live London events · updated ${esc(updatedText())}${creditText()}`}${!S.f.big && hiddenBig() ? ` · <button class="linkbtn" style="padding:0;min-height:0" data-act="showBig">Show ${hiddenBig()} big-venue and everyday listings</button>` : ''}</div>`;
+}
+
+function placeMatches(p){
+  const q = S.q.trim().toLowerCase(), f = S.f;
+  if(q && !`${p.name} ${p.cat} ${p.area} ${p.tags} ${p.colls.join(' ')}`.toLowerCase().includes(q)) return false;
+  if(f.areas.length || f.regions.length){ if(!f.areas.includes(p.area) && !f.regions.includes(p.region)) return false; }
+  if(S.pbud && !(p.budget === S.pbud || (S.pbud === 'Free' && p.budget === 'Free'))) return false;
+  if(S.pgroup && p.group !== S.pgroup) return false;
+  if(S.pcat && p.cat !== S.pcat) return false;
+  if(S.pcoll && !p.colls.includes(S.pcoll)) return false;
+  if(S.psub){ const sb = PUB_SUBS.find(x => x[0] === S.psub); if(sb && !(sb[2].test(p.tags) || p.colls.some(c => sb[2].test(c)))) return false; }
+  return true;
+}
+function pthumb(p){ return `<span class="thumb" style="background:var(--c-${PLACE_TINT[p.group]})" aria-hidden="true">${esc(p.group)}</span>`; }
+function pcard(p){
+  return `<a class="tcard" href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(p.name + ', ' + (p.pc || p.area + ', London'))}" target="_blank" rel="noopener">
+    <span class="tart" style="background:var(--c-${PLACE_TINT[p.group]})"><span class="big">${esc(p.cat)}</span>${p.budget ? `<span class="dbadge" style="font-size:12px">${esc(p.budget)}</span>` : ''}</span>
+    <span class="tt">${esc(p.name)}</span><span class="sub">${esc(p.area || p.region)}</span></a>`;
+}
+function vPlaces(){
+  const all = PLACES.filter(placeMatches);
+  const browsing = !S.q.trim() && !S.pcat && !S.pcoll;
+  const feat = browsing ? `<div class="feat" aria-label="Collections">${COLLECTIONS.map(c => {
+    const n = PLACES.filter(p => p.colls.includes(c)).length; if(!n) return '';
+    const g = PLACES.find(p => p.colls.includes(c)).group;
+    return `<button class="fcard" data-act="pcoll" data-id="${esc(c)}" style="background:var(--c-${PLACE_TINT[g]})"><span class="ftxt"><span class="ftag">Collection · ${n} places</span><span class="fttl">${esc(c)}</span><span>Tap to see them all</span></span></button>`;
+  }).join('')}</div>` : '';
+  const groups = Object.keys(PLACE_GROUPS);
+  let rows = '';
+  if(browsing){
+    const cats = S.pgroup ? PLACE_GROUPS[S.pgroup] : groups.flatMap(g => PLACE_GROUPS[g]);
+    cats.forEach(c => { const l = all.filter(p => p.cat === c); if(l.length) rows += `<div class="rhead"><h4>${esc(c)}</h4><button class="seeall" data-act="pcat" data-id="${esc(c)}">See all</button></div><div class="rrow" data-row="${esc(c)}">${l.slice(0, 10).map(pcard).join('')}</div>`; });
+  }
+  const isPubs = S.pcat === 'Pubs';
+  const heading = S.pcoll || S.pcat || (S.pgroup ? S.pgroup : 'All places');
+  return `<div class="chips" role="group" aria-label="Kind of place" style="padding-top:2px"><button class="chip" data-act="pgroup" data-id="" aria-pressed="${!S.pgroup}">All</button>${groups.map(g => `<button class="chip" data-act="pgroup" data-id="${g}" aria-pressed="${S.pgroup === g}">${g}</button>`).join('')}</div>
+  ${feat}${rows}
+  <div class="rhead" id="allList" style="margin-top:26px"><h4>${esc(heading)}</h4><span class="sub">${all.length} place${all.length === 1 ? '' : 's'}</span></div>
+  ${S.pcat || S.pcoll ? `<div class="active"><button class="achip" data-act="pclear">${esc(S.pcoll || S.pcat)}<span aria-hidden="true">×</span></button></div>` : ''}
+  ${isPubs ? `<div class="chips" role="group" aria-label="Pub type">${PUB_SUBS.map(s => `<button class="chip" data-act="psub" data-id="${s[0]}" aria-pressed="${S.psub === s[0]}">${s[1]}</button>`).join('')}</div>` : ''}
+  ${all.length ? `<div class="llist">${all.slice(0, S.limit).map(p => `<div class="lrow"><a class="open" href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(p.name + ', ' + (p.pc || p.area + ', London'))}" target="_blank" rel="noopener">${pthumb(p)}<span class="lmain"><span class="ttl">${esc(p.name)}</span><span class="sub">${esc(p.cat)} · ${esc(p.area || p.region)}${p.budget ? ' · ' + esc(p.budget) : ''}</span>${p.why ? `<span class="sub">${esc(p.why)}</span>` : ''}</span></a><span class="maplink">${I.pin}</span></div>`).join('')}</div>${all.length > S.limit ? `<button class="btn ghost more" data-act="more">Load ${Math.min(30, all.length - S.limit)} more</button>` : ''}`
+    : `<div class="empty" style="margin-top:12px">No places match.<br><button class="linkbtn" data-act="pclearAll">Clear place filters</button></div>`}
+  <div class="source">Places come from DesignMyNight's London guides and haven't been checked yet. Tap a place to open it in Google Maps.</div>`;
 }
 
 const CAT_ICONS = {
@@ -542,7 +766,7 @@ function catTiles(){
   }).join('');
 }
 function vSheet(){
-  const f = S.f, n = results().length;
+  const f = S.f, n = pool().filter(genreScoped).length;
   const chip = (act, id, label, on, sub) => `<button class="chip small" data-act="${act}" data-id="${esc(id)}" aria-pressed="${on}">${esc(label)}${sub ? `<span class="s">${esc(sub)}</span>` : ''}</button>`;
   return `<div class="scrim" data-act="closeSheet"></div>
   <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="sheetT">
@@ -554,10 +778,12 @@ function vSheet(){
       <div class="fs"><h5>Area</h5><div class="wrap">${Object.keys(AREAS).map(r => chip('fregion', r, r, f.regions.includes(r))).join('')}</div>
       ${f.regions.map(r => `<div class="subchips"><div class="sub" style="margin-bottom:8px">Narrow ${esc(r)} London to</div><div class="wrap">${AREAS[r].map(a => chip('farea', a, a, f.areas.includes(a))).join('')}</div></div>`).join('')}</div>
       <div class="fs"><h5>Price</h5><div class="wrap">${PRICES.map(p => chip('fprice', p[0], p[1], f.price === p[0])).join('')}</div></div>
-      <div class="fs"><h5>Type of event</h5><div class="wrap">${CATS.map(c => chip('fcat', c[0], c[1], f.cats.includes(c[0]))).join('')}</div></div>
       <div class="fs"><h5>Friends</h5>
         <label class="toggle" for="fFriends"><span class="ttl" style="font-size:15px">Only events friends would go to</span><input type="checkbox" id="fFriends" ${f.friendsOnly ? 'checked' : ''}></label>
         <label class="toggle" for="fHide"><span class="ttl" style="font-size:15px">Hide events I've already picked</span><input type="checkbox" id="fHide" ${f.hideMine ? 'checked' : ''}></label>
+      </div>
+      <div class="fs"><h5>Discover</h5>
+        <label class="toggle" for="fBig"><span><span class="ttl" style="font-size:15px;display:block">Show the big stuff too</span><span class="sub">Arenas, stadiums, long-running shows and markets open most days. Hidden by default so smaller events stand out.</span></span><input type="checkbox" id="fBig" ${f.big ? 'checked' : ''}></label>
       </div>
     </div>
     <div class="sheet-foot"><button class="btn ghost" data-act="clearF">Clear all</button><button class="btn primary" style="flex:1" data-act="closeSheet" ${n ? '' : 'disabled'}>${n ? `Show ${n} event${n === 1 ? '' : 's'}` : 'No events match'}</button></div>
@@ -586,7 +812,8 @@ function vEvent(id){
       <div class="fact">${I.ticket}<span>${esc(e.price)}${e.status ? ' · ' + esc(e.status) : ''}</span></div>
     </div>
     ${e.desc ? `<p style="margin:0;line-height:1.5;color:var(--muted)">${esc(e.desc)}</p>` : ''}
-    ${e.source && e.source !== 'Sample' ? `<p class="sub" style="margin:0">Listing from ${esc(e.source)}</p>` : ''}
+    ${e.longrun ? `<p class="sub" style="margin:0">Long-running: on lots of dates, so it's easy to pick another day.</p>` : ''}
+    ${e.source === 'OpenStreetMap' ? `<p class="sub" style="margin:0">Market details © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap contributors</a>. Opening hours can change, so check before you go.</p>` : e.source && e.source !== 'Sample' ? `<p class="sub" style="margin:0">Listing from ${esc(e.source)}</p>` : ''}
     <div class="who">${who}</div>
   </div>`;
 }
@@ -693,9 +920,9 @@ function render(){
     bottom = `<nav class="tabs" aria-label="App">${TABS.map(t => `<button data-act="tab" data-id="${t[0]}" ${t[0] === active ? 'aria-current="page"' : ''}>${t[2]}${t[1]}${t[0] === 'plans' && pendingAsks() ? `<span class="dot">${pendingAsks()}</span>` : ''}</button>`).join('')}</nav>`;
   }
   const oldBody = document.getElementById('sheetBody'), sheetTop = oldBody ? oldBody.scrollTop : 0, screenTop = $screen.scrollTop;
-  const oldTiles = $screen.querySelector('.tiles'), tilesLeft = oldTiles ? oldTiles.scrollLeft : 0;
+  const lefts = {}; $screen.querySelectorAll('[data-row], .feat, .toptabs, .chips').forEach((el, i) => { lefts[(el.dataset.row || el.className) + i] = el.scrollLeft; });
   $screen.className = cls; $screen.innerHTML = html; $bottom.innerHTML = bottom; $screen.scrollTop = screenTop;
-  const newTiles = $screen.querySelector('.tiles'); if(newTiles) newTiles.scrollLeft = tilesLeft;
+  $screen.querySelectorAll('[data-row], .feat, .toptabs, .chips').forEach((el, i) => { const k = (el.dataset.row || el.className) + i; if(lefts[k]) el.scrollLeft = lefts[k]; });
   $sheet.innerHTML = (v.name === 'explore' && S.sheet) ? vSheet() : '';
   const nb = document.getElementById('sheetBody'); if(nb) nb.scrollTop = sheetTop;
   if(v.name === 'chat'){ $screen.scrollTop = $screen.scrollHeight; }
@@ -708,6 +935,7 @@ function renderJump(){
   document.getElementById('jump').innerHTML = JUMPS.map(j => `<button type="button" data-jump="${j[0]}" aria-current="${S.view.name === j[0]}">${j[1]}</button>`).join('');
 }
 
+function toList(){ const el = document.getElementById('allList'); if(el) $screen.scrollTop = el.offsetTop - 8; }
 function ensureChat(id){ if(!S.chats[id]) S.chats[id] = []; }
 function heart(id){
   const e = EV[id];
@@ -774,8 +1002,17 @@ document.getElementById('phone').addEventListener('click', ev => {
   else if(a === 'fregion'){ S.f.regions = toggle(S.f.regions, id); if(!S.f.regions.includes(id)) S.f.areas = S.f.areas.filter(x => REGION[x] !== id); S.limit = 30; render(); }
   else if(a === 'farea'){ S.f.areas = toggle(S.f.areas, id); S.limit = 30; render(); }
   else if(a === 'fprice'){ S.f.price = id; S.limit = 30; render(); }
+  else if(a === 'showBig'){ S.f.big = true; S.limit = 30; render(); toast('Now showing big venues and everyday markets too. Turn this off in Filters.'); }
   else if(a === 'clearF'){ S.f = DEFAULT_F(); S.limit = 30; render(); }
   else if(a === 'more'){ S.limit += 30; render(); }
+  else if(a === 'top'){ S.top = id; S.genre = ''; S.limit = 30; render(); $screen.scrollTop = 0; }
+  else if(a === 'genre'){ S.genre = id; S.limit = 30; render(); if(b.classList.contains('seeall')) toList(); }
+  else if(a === 'pgroup'){ S.pgroup = id; S.pcat = ''; S.psub = ''; S.limit = 30; render(); }
+  else if(a === 'pcat'){ S.pcat = id; S.psub = ''; S.limit = 30; render(); toList(); }
+  else if(a === 'pcoll'){ S.pcoll = id; S.limit = 30; render(); toList(); }
+  else if(a === 'psub'){ S.psub = S.psub === id ? '' : id; S.limit = 30; render(); }
+  else if(a === 'pclear'){ S.pcat = ''; S.pcoll = ''; S.psub = ''; S.limit = 30; render(); }
+  else if(a === 'pclearAll'){ S.pcat = ''; S.pcoll = ''; S.psub = ''; S.pgroup = ''; S.pbud = ''; S.q = ''; S.f.regions = []; S.f.areas = []; S.limit = 30; render(); }
   else if(a === 'rm'){
     const [k, v] = id.split(':');
     if(k === 'when'){ S.f.when = 'all'; S.f.from = ''; S.f.to = ''; }
@@ -786,6 +1023,7 @@ document.getElementById('phone').addEventListener('click', ev => {
     else if(k === 'price') S.f.price = 'any';
     else if(k === 'friends') S.f.friendsOnly = false;
     else if(k === 'hide') S.f.hideMine = false;
+    else if(k === 'big') S.f.big = false;
     S.limit = 30; render();
   }
   else if(a === 'day'){ S.sel = id; render(); }
@@ -804,10 +1042,14 @@ document.getElementById('phone').addEventListener('change', ev => {
   if(t.dataset.pref){ S.prefs[t.dataset.pref] = t.checked; save(); toast(t.checked ? 'Notification on.' : 'Notification off.'); }
   if(t.id === 'uname') render();
   if(t.id === 'sortSel'){ S.sort = t.value; S.limit = 30; render(); }
+  if(t.id === 'locSel'){ if(t.value !== 'several'){ S.f.regions = t.value === 'all' ? [] : [t.value]; S.f.areas = []; } S.limit = 30; render(); }
+  if(t.id === 'whenSel'){ S.f.when = t.value; if(t.value === 'dates') S.sheet = true; S.limit = 30; render(); }
+  if(t.id === 'budSel'){ S.pbud = t.value; S.limit = 30; render(); }
   if(t.id === 'fFrom'){ S.f.from = t.value; if(S.f.to && S.f.to < S.f.from) S.f.to = ''; render(); }
   if(t.id === 'fTo'){ S.f.to = t.value; render(); }
   if(t.id === 'fFriends'){ S.f.friendsOnly = t.checked; S.limit = 30; render(); }
   if(t.id === 'fHide'){ S.f.hideMine = t.checked; S.limit = 30; render(); }
+  if(t.id === 'fBig'){ S.f.big = t.checked; S.limit = 30; render(); }
 });
 document.getElementById('phone').addEventListener('submit', ev => {
   ev.preventDefault(); const f = ev.target; const inp = document.getElementById('msgIn'); const text = inp.value.trim(); if(!text) return;
@@ -832,6 +1074,14 @@ document.getElementById('simGo').addEventListener('click', () => { if(EV[$se.val
 document.getElementById('simDigest').addEventListener('click', () => { if(S.view.name !== 'loading') digest(); });
 document.getElementById('simReset').addEventListener('click', () => { if(S.view.name === 'loading') return; S = fresh(); render(); fillSim(); toast('Demo reset.'); });
 
+function creditText(){
+  const src = (META.sources || []).filter(x => !/picks/i.test(x));
+  if(!src.length) return '';
+  const names = src.map(x => esc(x));
+  const list = names.length < 2 ? names[0] : names.slice(0, -1).join(', ') + ' and ' + names.at(-1);
+  return ' · listings from ' + list + (src.includes('OpenStreetMap') ? ' (markets © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap contributors</a>)' : '');
+}
+function hiddenBig(){ return EVENTS.filter(e => e.big).length; }
 function updatedText(){
   if(!META.updated) return 'recently';
   const d = new Date(META.updated);
@@ -847,7 +1097,7 @@ async function boot(){
       const data = await res.json();
       const list = Array.isArray(data) ? data : (data.events || []);
       if(list.length){
-        setEvents(list, {updated:data.updated, ticketmaster: list.some(e => e.source === 'Ticketmaster')});
+        setEvents(list, {updated:data.updated, sources: [...new Set(list.map(e => e.source).filter(x => x && x !== 'Sample'))]});
         loaded = EVENTS.length > 0;
       }
     }

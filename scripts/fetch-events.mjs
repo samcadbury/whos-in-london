@@ -16,6 +16,13 @@ const OUT_DIR = process.env.OUT_DIR || '_site';
 const DAYS_AHEAD = Number(process.env.DAYS_AHEAD || 42);
 const FALLBACK_URL = process.env.FALLBACK_URL || '';
 const MOCK_FILE = process.env.TM_MOCK_FILE || ''; // for testing without a key
+const SKIDDLE_KEY = process.env.SKIDDLE_API_KEY || '';
+const SKIDDLE_MOCK = process.env.SKIDDLE_MOCK_FILE || '';
+const OSM_MOCK = process.env.OSM_MOCK_FILE || '';
+const LONDON = { lat: 51.5074, lon: -0.1278 };
+
+// Arenas, stadiums and other very large venues. Events here are marked "big" and hidden by default in the app.
+const BIG_VENUE = /\bO2\b(?! Academy (Islington|Kentish))|wembley|ovo arena|\barena\b|stadium|royal albert hall|eventim apollo|hammersmith apollo|alexandra palace|ally pally|hyde park|finsbury park|victoria park|brockwell park|crystal palace park|gunnersbury park|twickenham|emirates|tottenham hotspur|craven cottage|stamford bridge|selhurst park|lord'?s cricket|kia oval|the oval|excel london|olympia london|copper box|lee valley|outernet|troxy|printworks|drumsheds|o2 academy brixton|brixton academy|indigo at the o2/i;
 
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 
@@ -43,7 +50,12 @@ const DISTRICTS = {
   SW2: 'Brixton', SW3: 'Chelsea', SW4: 'Clapham', SW6: 'Fulham', SW8: 'Vauxhall', SW9: 'Brixton', SW11: 'Battersea',
   SW15: 'Putney', SW17: 'Tooting', SW18: 'Wandsworth', SW19: 'Wimbledon',
   W2: 'Paddington', W4: 'Chiswick', W6: 'Hammersmith', W8: 'Kensington', W10: 'North Kensington', W11: 'Notting Hill',
-  W12: "Shepherd's Bush", W14: 'West Kensington', HA9: 'Wembley', TW1: 'Twickenham', TW2: 'Twickenham'
+  W12: "Shepherd's Bush", W14: 'West Kensington', HA9: 'Wembley', TW1: 'Twickenham', TW2: 'Twickenham',
+  E1W: 'Wapping', E6: 'East Ham', E7: 'Forest Gate', E11: 'Leytonstone', E13: 'Plaistow',
+  N2: 'East Finchley', N6: 'Highgate', N8: 'Crouch End', N10: 'Muswell Hill', N15: 'Tottenham', N17: 'Tottenham',
+  NW2: 'Cricklewood', NW9: 'Colindale', SE4: 'Brockley', SE6: 'Catford', SE9: 'Eltham', SE13: 'Lewisham', SE17: 'Walworth',
+  SE18: 'Woolwich', SE19: 'Crystal Palace', SE23: 'Forest Hill', SE24: 'Herne Hill', SE27: 'West Norwood',
+  SW12: 'Balham', SW16: 'Streatham', W3: 'Acton', W5: 'Ealing', W9: 'Maida Vale', W13: 'West Ealing'
 };
 const CENTRAL = new Set(['EC1', 'EC2', 'EC3', 'EC4', 'WC1', 'WC2', 'W1', 'SW1', 'SE1']);
 const OUTER = { HA: 'West', UB: 'West', TW: 'West', KT: 'South', CR: 'South', SM: 'South', BR: 'South', DA: 'South', RM: 'East', IG: 'East', EN: 'North' };
@@ -118,6 +130,9 @@ function mapTicketmaster(ev) {
     url: ev.url || '',
     desc: (ev.info || ev.pleaseNote || '').slice(0, 280),
     status: status === 'offsale' ? 'Sold out or off sale' : status === 'rescheduled' ? 'Rescheduled' : '',
+    genre: ((ev.classifications || [])[0] || {}).genre?.name || '',
+    sub: ((ev.classifications || [])[0] || {}).subGenre?.name || '',
+    big: BIG_VENUE.test(venue.name || ''),
     source: 'Ticketmaster'
   };
 }
@@ -158,6 +173,134 @@ async function fetchTicketmaster() {
   }
   console.log(`Ticketmaster: ${all.length} listings from ${requests} requests${capped ? ` (${capped} days hit the 1,000 limit)` : ''}`);
   return all;
+}
+
+// ---------- Skiddle (grassroots gigs, club nights, comedy) ----------
+// Free key from skiddle.com/api. Skiddle's API is for non-commercial use unless they approve otherwise.
+const SKIDDLE_CATS = { LIVE: 'gigs', FEST: 'gigs', CLUB: 'clubs', LGB: 'clubs', BARPUB: 'clubs', COMEDY: 'comedy', THEATRE: 'theatre', ARTS: 'theatre', EXHIB: 'theatre', SPORT: 'sport' };
+async function fetchSkiddle() {
+  if (SKIDDLE_MOCK) return JSON.parse(await readFile(SKIDDLE_MOCK, 'utf8'));
+  if (!SKIDDLE_KEY) { console.log('No SKIDDLE_API_KEY set: skipping Skiddle.'); return null; }
+  const all = [];
+  // Search a week at a time and page through 100 results per request.
+  for (let from = TODAY; from <= END; from = addDays(from, 7)) {
+    const to = addDays(from, 6) > END ? END : addDays(from, 6);
+    for (let offset = 0; offset < 3000; offset += 100) {
+      const params = new URLSearchParams({
+        api_key: SKIDDLE_KEY, latitude: String(LONDON.lat), longitude: String(LONDON.lon), radius: '12',
+        minDate: from, maxDate: to, limit: '100', offset: String(offset), description: '1'
+      });
+      const res = await fetch(`https://www.skiddle.com/api/v1/events/search/?${params}`);
+      if (!res.ok) throw new Error(`Skiddle returned ${res.status}: ${(await res.text()).slice(0, 200)}`);
+      const json = await res.json();
+      if (json.error && Number(json.error) !== 0) throw new Error(`Skiddle error: ${json.errormessage || json.error}`);
+      const list = json.results || [];
+      all.push(...list);
+      await sleep(300);
+      if (list.length < 100) break;
+    }
+    console.log(`Skiddle ${from} to ${to}: ${all.length} listings so far`);
+  }
+  return all;
+}
+function parseLocal(dt) { // "2026-10-24T19:30:00+01:00" or "2026-10-24 19:30:00"
+  const m = /^(\d{4}-\d{2}-\d{2})[T ](\d{2}):(\d{2})/.exec(String(dt || ''));
+  return m ? { date: m[1], h: Number(m[2]) + Number(m[3]) / 60 } : null;
+}
+function cleanText(t) { return String(t || '').replace(/<[^>]*>/g, ' ').replace(/&amp;/g, '&').replace(/&#0?39;|&rsquo;/g, "'").replace(/&[a-z]+;/g, ' ').replace(/\s+/g, ' ').trim(); }
+function mapSkiddle(ev) {
+  const cat = SKIDDLE_CATS[String(ev.EventCode || ev.eventcode || '').toUpperCase()];
+  if (!cat) return null;
+  if (ev.cancelled === '1' || ev.cancelled === 1 || ev.cancelled === true) return null;
+  const t = parseLocal(ev.startdate) || (ev.date ? { date: String(ev.date).slice(0, 10), h: null } : null);
+  if (!t || t.date < TODAY || t.date > END) return null;
+  const v = ev.venue || {};
+  const place = placeFromPostcode(v.postcode, v.town && !/london/i.test(v.town) ? v.town : '');
+  const raw = ev.entryprice ?? ev.ticketpricing?.minPrice;
+  const num = typeof raw === 'number' ? raw : parseFloat(String(raw || '').replace(/[^0-9.]/g, ''));
+  const free = /free/i.test(String(raw || ''));
+  const pmin = free ? 0 : (isNaN(num) ? null : Math.round(num));
+  const img = [ev.largeimageurl, ev.imageurl].find(u => /^https:\/\//.test(String(u || ''))) || '';
+  return {
+    id: 'sk-' + ev.id, title: cleanText(ev.eventname), cat, date: t.date,
+    time: t.h === null ? 'Time TBC' : fmtTime(t.h), h: t.h,
+    venue: cleanText(v.name), area: place.area, region: place.region,
+    pmin, price: pmin === null ? 'See tickets' : pmin === 0 ? 'Free' : 'From £' + pmin,
+    img, url: /^https:\/\//.test(String(ev.link || '')) ? ev.link : '',
+    desc: cleanText(ev.description).slice(0, 280), status: '',
+    big: BIG_VENUE.test(v.name || ''), source: 'Skiddle'
+  };
+}
+
+// ---------- Markets from OpenStreetMap ----------
+// Data © OpenStreetMap contributors, available under the Open Database Licence. The app credits it.
+const OSM_DAYS = { Mo: 1, Tu: 2, We: 3, Th: 4, Fr: 5, Sa: 6, Su: 0 };
+const OSM_ORDER = ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'];
+// Understands simple opening hours such as "Sa 09:00-17:00; Su 10:00-16:00" or "Mo-Fr 10:00-18:00".
+// Returns { weekday: firstOpeningHour } or null when the hours are too complex to trust.
+function parseOpeningHours(oh) {
+  // Public and school holiday rules ("PH off") don't change the weekly pattern, so drop them.
+  const rules = String(oh || '').split(/[;|]/).map(r => r.trim()).filter(r => r && !/^(PH|SH)\b/.test(r));
+  const s = rules.join('; ');
+  if (!s || /24\/7|\[|\bweek\b|Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec|sunrise|sunset|easter/i.test(s)) return null;
+  const out = {};
+  for (const rule of rules) {
+    if (/\boff\b|closed/i.test(rule)) continue;
+    const m = /^((?:Mo|Tu|We|Th|Fr|Sa|Su)(?:\s*-\s*(?:Mo|Tu|We|Th|Fr|Sa|Su))?(?:\s*,\s*(?:Mo|Tu|We|Th|Fr|Sa|Su)(?:\s*-\s*(?:Mo|Tu|We|Th|Fr|Sa|Su))?)*)\s+(\d{1,2}):(\d{2})\s*-/.exec(rule);
+    if (!m) return null;
+    const h = Number(m[2]) + Number(m[3]) / 60;
+    for (const part of m[1].split(',').map(x => x.trim())) {
+      const [a, b] = part.split('-').map(x => x.trim());
+      const i = OSM_ORDER.indexOf(a), j = b ? OSM_ORDER.indexOf(b) : i;
+      if (i < 0 || j < 0) return null;
+      for (let k = i; ; k = (k + 1) % 7) { const d = OSM_DAYS[OSM_ORDER[k]]; if (out[d] === undefined || h < out[d]) out[d] = h; if (k === j) break; }
+    }
+  }
+  return Object.keys(out).length ? out : null;
+}
+function regionFromPoint(lat, lon) {
+  const dy = (lat - LONDON.lat) * 111, dx = (lon - LONDON.lon) * 111 * Math.cos(LONDON.lat * Math.PI / 180);
+  if (Math.hypot(dx, dy) < 3.5) return 'Central';
+  const ang = (Math.atan2(dy, dx) * 180 / Math.PI + 360) % 360;
+  return ang >= 45 && ang < 135 ? 'North' : ang >= 135 && ang < 225 ? 'West' : ang >= 225 && ang < 315 ? 'South' : 'East';
+}
+async function fetchMarkets() {
+  if (OSM_MOCK) return JSON.parse(await readFile(OSM_MOCK, 'utf8')).elements || [];
+  const query = '[out:json][timeout:90];area["name"="Greater London"]["boundary"="administrative"]->.a;(nwr["amenity"="marketplace"](area.a););out center tags;';
+  const res = await fetch('https://overpass-api.de/api/interpreter', {
+    method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'User-Agent': 'WhosIn/1.0 (London events tester)' },
+    body: 'data=' + encodeURIComponent(query)
+  });
+  if (!res.ok) throw new Error(`OpenStreetMap returned ${res.status}`);
+  return (await res.json()).elements || [];
+}
+function expandMarkets(elements) {
+  const out = []; let noHours = 0;
+  for (const el of elements) {
+    const t = el.tags || {};
+    if (!t.name || t.disused || t['disused:amenity'] || /^no$/i.test(t.access || '')) continue;
+    const hours = parseOpeningHours(t.opening_hours);
+    if (!hours) { noHours++; continue; }
+    const lat = el.lat ?? el.center?.lat, lon = el.lon ?? el.center?.lon;
+    const byPost = t['addr:postcode'] ? placeFromPostcode(t['addr:postcode'], '') : null;
+    const region = byPost && byPost.area !== 'London' ? byPost.region : (lat ? regionFromPoint(lat, lon) : 'Central');
+    const area = t['addr:suburb'] || t['addr:district'] || (byPost && !/^[A-Z]{1,2}\d/.test(byPost.area) ? byPost.area : '') || region + ' London';
+    const daysOpen = Object.keys(hours).length;
+    const url = [t.website, t['contact:website'], t.url].find(u => /^https:\/\//.test(String(u || ''))) || '';
+    for (let d = TODAY; d <= END; d = addDays(d, 1)) {
+      const wd = new Date(d + 'T12:00:00Z').getUTCDay();
+      if (hours[wd] === undefined) continue;
+      out.push({
+        id: `osm-${el.type?.[0] || 'x'}${el.id}-${d}`, title: t.name, cat: 'markets', date: d,
+        time: fmtTime(hours[wd]), h: hours[wd], venue: t['addr:street'] || '', area, region,
+        pmin: 0, price: 'Free entry', img: '', url,
+        desc: cleanText(t.description || `Market open ${t.opening_hours}. Hours from OpenStreetMap: check before you go.`).slice(0, 280),
+        status: '', big: daysOpen >= 5, source: 'OpenStreetMap'
+      });
+    }
+  }
+  console.log(`Markets: ${out.length} market days from ${elements.length} mapped markets (${noHours} skipped with no clear opening hours).`);
+  return out;
 }
 
 // ---------- Manual picks ----------
@@ -202,48 +345,65 @@ async function loadManual() {
 }
 
 // ---------- Main ----------
+async function previousEvents() {
+  if (!FALLBACK_URL) return [];
+  try { const res = await fetch(FALLBACK_URL, { cache: 'no-store' }); if (res.ok) return (await res.json()).events || []; }
+  catch (e) { console.warn('Could not load previous events:', e.message); }
+  return [];
+}
+function dedupe(list) {
+  const seen = new Set(), out = []; let dupes = 0;
+  for (const e of list) {
+    const venueKey = e.cat === 'markets' ? '' : (e.venue || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+    const key = `${e.title.toLowerCase().replace(/[^a-z0-9]/g, '')}|${e.date}|${venueKey}`;
+    if (seen.has(key)) { dupes++; continue; } seen.add(key); out.push(e);
+  }
+  return { out, dupes };
+}
 async function main() {
-  let tm = [], tmOk = false, note = '';
-  try {
-    const raw = await fetchTicketmaster();
-    if (raw) {
-      tmOk = true;
-      const seen = new Set(), seenIds = new Set();
-      let skipped = 0, dupes = 0;
-      for (const ev of raw) {
-        if (seenIds.has(ev.id)) { dupes++; continue; } seenIds.add(ev.id);
-        const e = mapTicketmaster(ev);
-        if (!e) { skipped++; continue; }
-        const key = `${e.title.toLowerCase()}|${e.date}|${e.time}|${e.venue.toLowerCase()}`;
-        if (seen.has(key)) { dupes++; continue; } seen.add(key);
-        tm.push(e);
-      }
-      console.log(`Kept ${tm.length}; skipped ${skipped} (cancelled, films, add-ons, parking or unclassified); removed ${dupes} duplicates.`);
-    }
-  } catch (err) {
-    console.error('Ticketmaster fetch failed:', err.message);
-    note = 'ticketmaster-failed';
-  }
+  const notes = [];
+  let prev = null;
+  const fromPrev = async (source) => { prev = prev || await previousEvents(); return prev.filter(e => e.source === source && e.date >= TODAY); };
 
-  // If Ticketmaster failed, keep yesterday's Ticketmaster events so the site never goes empty.
-  if (!tmOk && FALLBACK_URL) {
+  // Each source is optional: if one fails, yesterday's events from that source are kept.
+  async function run(name, fetcher, mapper) {
     try {
-      const res = await fetch(FALLBACK_URL, { cache: 'no-store' });
-      if (res.ok) {
-        const prev = await res.json();
-        tm = (prev.events || []).filter(e => e.source === 'Ticketmaster' && e.date >= TODAY);
-        console.log(`Reused ${tm.length} Ticketmaster events from the live site.`);
-        note = note || 'reused-previous';
-      }
-    } catch (e) { console.warn('Could not reuse previous events:', e.message); }
+      const raw = await fetcher();
+      if (raw === null) return [];
+      const mapped = mapper(raw);
+      console.log(`${name}: kept ${mapped.length}`);
+      return mapped;
+    } catch (err) {
+      console.error(`${name} failed: ${err.message}`);
+      notes.push(`${name.toLowerCase()}-failed`);
+      const old = await fromPrev(name);
+      console.log(`${name}: reused ${old.length} events from the live site.`);
+      return old;
+    }
   }
-
+  const tm = await run('Ticketmaster', fetchTicketmaster, raw => {
+    const ids = new Set(); return raw.filter(ev => !ids.has(ev.id) && ids.add(ev.id)).map(mapTicketmaster).filter(Boolean);
+  });
+  const sk = await run('Skiddle', fetchSkiddle, raw => {
+    const ids = new Set(); return raw.filter(ev => !ids.has(ev.id) && ids.add(ev.id)).map(mapSkiddle).filter(Boolean);
+  });
+  const mk = await run('OpenStreetMap', fetchMarkets, expandMarkets);
   const manual = await loadManual();
-  const events = [...tm, ...manual].sort((a, b) => a.date.localeCompare(b.date) || (a.h ?? 12) - (b.h ?? 12));
-  const data = { updated: new Date().toISOString(), from: TODAY, to: END, note, counts: { ticketmaster: tm.length, manual: manual.length }, events };
+
+  // Your picks first, then Skiddle (smaller venues), then markets, then Ticketmaster, so duplicates keep the better listing.
+  const { out: events, dupes } = dedupe([...manual, ...sk, ...mk, ...tm]);
+
+  // Long-running shows (the same title at the same venue on 6+ days) are marked "big" so they don't swamp the feed.
+  const runs = {};
+  events.forEach(e => { if (e.source !== 'OpenStreetMap' && !e.source.includes('picks')) { const k = e.title.toLowerCase() + '|' + (e.venue || '').toLowerCase(); runs[k] = (runs[k] || 0) + 1; } });
+  events.forEach(e => { const k = e.title.toLowerCase() + '|' + (e.venue || '').toLowerCase(); if (runs[k] >= 6) { e.big = true; e.longrun = true; } });
+
+  events.sort((a, b) => a.date.localeCompare(b.date) || (a.h ?? 12) - (b.h ?? 12));
+  const counts = { ticketmaster: tm.length, skiddle: sk.length, markets: mk.length, manual: manual.length, duplicatesRemoved: dupes, big: events.filter(e => e.big).length };
+  const data = { updated: new Date().toISOString(), from: TODAY, to: END, note: notes.join(','), counts, events };
   await mkdir(OUT_DIR, { recursive: true });
   await writeFile(join(OUT_DIR, 'events.json'), JSON.stringify(data));
-  console.log(`Wrote ${events.length} events (${tm.length} Ticketmaster, ${manual.length} your picks) to ${join(OUT_DIR, 'events.json')}`);
+  console.log(`Wrote ${events.length} events to ${join(OUT_DIR, 'events.json')}:`, counts);
 }
 
 main().catch(err => { console.error(err); process.exit(1); });
