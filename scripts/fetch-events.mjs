@@ -116,7 +116,7 @@ function mapTicketmaster(ev) {
     price: pmin === null ? 'See tickets' : pmin === 0 ? 'Free' : (pr.max > pr.min ? 'From £' : '£') + pmin,
     img: pickImage(ev.images),
     url: ev.url || '',
-    desc: (ev.info || ev.pleaseNote || '').slice(0, 400),
+    desc: (ev.info || ev.pleaseNote || '').slice(0, 280),
     status: status === 'offsale' ? 'Sold out or off sale' : status === 'rescheduled' ? 'Rescheduled' : '',
     source: 'Ticketmaster'
   };
@@ -129,25 +129,34 @@ async function fetchTicketmaster() {
     return pages.flatMap(p => p._embedded?.events || []);
   }
   if (!KEY) { console.warn('No TICKETMASTER_API_KEY set: skipping Ticketmaster.'); return null; }
+  // Ticketmaster returns at most 1,000 results per search, so search one day at a time.
   const all = [];
   const size = 200;
-  for (let page = 0; page < 5; page++) { // the API returns at most 1,000 results per search
-    const params = new URLSearchParams({
-      apikey: KEY, city: 'London', countryCode: 'GB', locale: '*', sort: 'date,asc',
-      startDateTime: `${TODAY}T00:00:00Z`, endDateTime: `${END}T23:59:59Z`,
-      size: String(size), page: String(page)
-    });
-    const res = await fetch(`https://app.ticketmaster.com/discovery/v2/events.json?${params}`);
-    if (res.status === 429) { await sleep(2000); page--; continue; }
-    if (!res.ok) throw new Error(`Ticketmaster returned ${res.status}: ${(await res.text()).slice(0, 200)}`);
-    const json = await res.json();
-    const list = json._embedded?.events || [];
-    all.push(...list);
-    const total = json.page?.totalPages ?? 0;
-    console.log(`Ticketmaster page ${page + 1}/${Math.min(total, 5)}: ${list.length} events`);
-    if (page + 1 >= total) break;
-    await sleep(300);
+  let requests = 0, capped = 0;
+  for (let day = TODAY; day <= END; day = addDays(day, 1)) {
+    let dayCount = 0, retries = 0;
+    for (let page = 0; page < 5; page++) {
+      const params = new URLSearchParams({
+        apikey: KEY, city: 'London', countryCode: 'GB', locale: '*', sort: 'date,asc',
+        startDateTime: `${day}T00:00:00Z`, endDateTime: `${day}T23:59:59Z`,
+        size: String(size), page: String(page)
+      });
+      const res = await fetch(`https://app.ticketmaster.com/discovery/v2/events.json?${params}`);
+      requests++;
+      if (res.status === 429 && retries < 5) { retries++; await sleep(2000 * retries); page--; continue; }
+      if (!res.ok) throw new Error(`Ticketmaster returned ${res.status} on ${day}: ${(await res.text()).slice(0, 200)}`);
+      const json = await res.json();
+      const list = json._embedded?.events || [];
+      all.push(...list);
+      dayCount += list.length;
+      const total = json.page?.totalPages ?? 0;
+      await sleep(250); // stay under 5 requests a second
+      if (page + 1 >= total) break;
+      if (page === 4) capped++;
+    }
+    console.log(`${day}: ${dayCount} listings`);
   }
+  console.log(`Ticketmaster: ${all.length} listings from ${requests} requests${capped ? ` (${capped} days hit the 1,000 limit)` : ''}`);
   return all;
 }
 
@@ -199,14 +208,17 @@ async function main() {
     const raw = await fetchTicketmaster();
     if (raw) {
       tmOk = true;
-      const seen = new Set();
+      const seen = new Set(), seenIds = new Set();
+      let skipped = 0, dupes = 0;
       for (const ev of raw) {
+        if (seenIds.has(ev.id)) { dupes++; continue; } seenIds.add(ev.id);
         const e = mapTicketmaster(ev);
-        if (!e) continue;
-        const key = `${e.title.toLowerCase()}|${e.date}|${e.venue.toLowerCase()}`;
-        if (seen.has(key)) continue; seen.add(key);
+        if (!e) { skipped++; continue; }
+        const key = `${e.title.toLowerCase()}|${e.date}|${e.time}|${e.venue.toLowerCase()}`;
+        if (seen.has(key)) { dupes++; continue; } seen.add(key);
         tm.push(e);
       }
+      console.log(`Kept ${tm.length}; skipped ${skipped} (cancelled, films, add-ons, parking or unclassified); removed ${dupes} duplicates.`);
     }
   } catch (err) {
     console.error('Ticketmaster fetch failed:', err.message);
